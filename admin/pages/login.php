@@ -20,7 +20,7 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 
 	$query = "SELECT *
 	FROM `users`
-	WHERE user_login='$login' AND user_password='$password'";
+	WHERE user_login='$login' OR user_email='$login' AND user_password='$password'";
 	$stmt = $pdo->prepare( $query );
 	$stmt->execute();
 	$user = $stmt->fetch();

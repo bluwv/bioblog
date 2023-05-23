@@ -13,7 +13,7 @@ if ( isset( $_GET['offset'] ) ) {
 $query = "SELECT COUNT(*) FROM posts";
 $total_posts = $pdo->query( $query )->fetchColumn();
 
-$limit_posts = 3;
+$limit_posts = 20;
 $posts_per_page = ceil( $total_posts / $limit_posts );
 $offset = ($offset - 1) * $limit_posts;
 
@@ -29,6 +29,7 @@ $offset = ($offset - 1) * $limit_posts;
 // ";
 $query = "SELECT posts.id as slug, posts.post_date, posts.post_title, posts.post_status
 FROM posts
+ORDER BY posts.post_date ASC
 LIMIT ". $limit_posts ." OFFSET " . $offset
 ;
 $stmt = $pdo->prepare( $query );
@@ -58,7 +59,7 @@ $posts = $stmt->fetchAll();
 	</table>
 
 	<div>
-		<?php if ( $total_posts <= $posts_per_page ) : ?>
+		<?php if ( $total_posts >= $limit_posts ) : ?>
 			<?php for ( $i = 1 ; $i <= $posts_per_page ; $i++ ) : ?>
 				<a href="index.php?page=posts-list&offset=<?php echo $i; ?>"><?php echo $i; ?></a>
 			<?php endfor; ?>

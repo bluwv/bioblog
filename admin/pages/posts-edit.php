@@ -31,6 +31,12 @@ $title = ( isset( $post->post_title ) ) ? $post->post_title : "";
 $content = ( isset( $post->post_content ) ) ? $post->post_content : "";
 
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+	$title = test_input( $_POST['post_title'] );
+	$content = test_input( $_POST['post_content'] );
+	$author = $_SESSION["current_session"]["user_id"];
+	$date = date('Y-m-d H:i:s');
+	$status = isset( $_POST['publish'] ) ? "publish" : "draft";
+
 	if ( isset( $_POST['delete'] ) ) {
 
 		$query = "DELETE FROM `posts`
@@ -41,39 +47,67 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		$message = "Record deleted successfully.";
 		header('Location: index.php?page=posts-list');
 
+	} else if ( isset( $_POST['publish'], $_POST['post_title'], $_POST['post_content'] ) ) {
+
+		if ( isset( $_GET['id'] ) ) {
+
+			$post_id =  $_GET['id'];
+
+			$query = "UPDATE `posts`
+			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status
+			WHERE `id` = :post_id";
+			$stmt = $pdo->prepare( $query );
+			$stmt->bindValue(":post_title", $title);
+			$stmt->bindValue(":post_content", $content);
+			$stmt->bindValue(":post_status", $status);
+			$stmt->bindValue(":post_id", $post_id);
+			$stmt->execute();
+
+			$message = "Record published successfully.";
+
+		} else {
+
+			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date)
+			VALUES ('$title', '$content', '$author', '$status', '$date')";
+			$stmt = $pdo->prepare( $query );
+			$stmt->execute();
+
+			$message = "New record created and published successfully.";
+
+		}
+
 	} else if ( isset( $_POST['submit'], $_POST['post_title'], $_POST['post_content'] ) ) {
 
-		$title = test_input( $_POST['post_title'] );
-		$content = test_input( $_POST['post_content'] );
-		$author = $_SESSION["current_session"]["user_id"];
-		$status = 'publish';
-		$date = date('Y-m-d H:i:s');
+		// try {
+		if ( isset( $_GET['id'] ) ) {
 
-		try {
-			if ( isset( $_GET['id'] ) ) {
-				$post_id =  $_GET['id'];
+			$post_id =  $_GET['id'];
 
-				$query = "UPDATE `posts`
-				SET `post_title` = :post_title, `post_content` = :post_content
-				WHERE `id` = :post_id";
-				$stmt = $pdo->prepare( $query );
-				$stmt->bindValue(":post_title", $title);
-				$stmt->bindValue(":post_content", $content);
-				$stmt->bindValue(":post_id", $post_id);
-				$stmt->execute();
+			$query = "UPDATE `posts`
+			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status
+			WHERE `id` = :post_id";
+			$stmt = $pdo->prepare( $query );
+			$stmt->bindValue(":post_title", $title);
+			$stmt->bindValue(":post_content", $content);
+			$stmt->bindValue(":post_status", $status);
+			$stmt->bindValue(":post_id", $post_id);
+			$stmt->execute();
 
-				$message = "Record updated successfully.";
-			} else {
-				$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date)
-				VALUES ('$title', '$content', '$author', '$status', '$date')";
-				$stmt = $pdo->prepare( $query );
-				$stmt->execute();
+			$message = "Record updated successfully.";
 
-				$message = "New record created successfully.";
-			}
-		} catch ( \PDOException $e ) {
-			echo $e->getMessage();
+		} else {
+
+			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date)
+			VALUES ('$title', '$content', '$author', '$status', '$date')";
+			$stmt = $pdo->prepare( $query );
+			$stmt->execute();
+
+			$message = "New record created successfully.";
+
 		}
+		// } catch ( \PDOException $e ) {
+		// 	echo $e->getMessage();
+		// }
 
 	}
 }
@@ -83,6 +117,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 <div class="edit">
 	<article>
 		<form action="" method="POST">
+			<div class="form-row">
+				<label for="post_thumbnail">Mon thumbnail</label>
+				<input id="post_thumbnail" class="" type="file" name="post_thumbnail" >
+			</div>
+
 			<div class="form-row">
 				<label for="post_title">Mon titre</label>
 				<input id="post_title" class="" type="text" name="post_title" placeholder="Mon super titre" value="<?php echo $title; ?>">
@@ -94,7 +133,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			</div>
 
 			<div class="form-row">
-				<button type="submit" name="submit"><?php echo ( isset( $_GET['id'] ) ) ? "Modifier" : "Ajouter"; ?></button>
+				<button type="submit" name="submit" value="draft">Sauver</button>
+				<button type="submit" name="publish" value="publish">Publier</button>
 				<button type="submit" name="delete">Supprimer</button>
 			</div>
 
