@@ -16,7 +16,9 @@
 	list-style-type: none;
 }
 
-.menu-item {}
+.menu-item {
+	margin: 0 10px;
+}
 
 .post-list {
 	display: grid;

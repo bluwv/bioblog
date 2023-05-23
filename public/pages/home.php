@@ -6,6 +6,27 @@ $stmt->execute();
 $categories = $stmt->fetchAll();
 // var_dump($categories);
 
+if ( isset( $_GET['offset'] ) ) {
+	$offset = $_GET['offset'];
+} else {
+	$offset = 1;
+}
+
+if ( isset( $_GET['category_id'] ) ) {
+	$query = "SELECT COUNT(*) FROM posts
+	LEFT JOIN categorie_post ON posts.id = categorie_post.id_post
+	LEFT JOIN categories ON categorie_post.id_categorie = categories.id
+	WHERE categories.id = " . $_GET['category_id'];
+	$total_posts = $pdo->query( $query )->fetchColumn();
+} else {
+	$query = "SELECT COUNT(*) FROM posts";
+	$total_posts = $pdo->query( $query )->fetchColumn();
+}
+
+$limit_posts = 6;
+$posts_per_page = ceil( $total_posts / $limit_posts );
+$offset = ($offset - 1) * $limit_posts;
+
 if ( isset( $_GET['category_id'] ) ) {
 	$query = "SELECT *, posts.id as post_id
 	FROM posts
@@ -14,15 +35,15 @@ if ( isset( $_GET['category_id'] ) ) {
 	LEFT JOIN categories ON categorie_post.id_categorie = categories.id
 	WHERE categories.id = " . $_GET['category_id'] .  "
 	ORDER BY posts.post_date ASC
-	LIMIT 12";
+	LIMIT "  . $limit_posts . " OFFSET " . $offset;
 } else {
-	$query = "SELECT *, posts.id as post_id
+	$query = "SELECT posts.id as post_id, posts.post_title, posts.post_status
 	FROM posts
-	LEFT JOIN users ON posts.post_author = users.id
-	LEFT JOIN categorie_post ON posts.id = categorie_post.id_post
-	LEFT JOIN categories ON categorie_post.id_categorie = categories.id
+	-- LEFT JOIN users ON posts.post_author = users.id
+	-- LEFT JOIN categorie_post ON posts.id = categorie_post.id_post
+	-- LEFT JOIN categories ON categorie_post.id_categorie = categories.id
 	ORDER BY posts.post_date ASC
-	LIMIT 12";
+	LIMIT " . $limit_posts . " OFFSET " . $offset;
 }
 
 $stmt = $pdo->prepare( $query );
@@ -63,7 +84,13 @@ $posts = $stmt->fetchAll();
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</section>
+
+		<div>
+			<?php if ( $total_posts <= $posts_per_page ) : ?>
+				<?php for ( $i = 1 ; $i <= $posts_per_page ; $i++ ) : ?>
+					<a href="index.php?offset=<?php echo $i; ?>"><?php echo $i; ?></a>
+				<?php endfor; ?>
+			<?php endif; ?>
+		</div>
 	</article>
 </div>
-
-<img src="https://images.unsplash.com/photo-1683049339644-3f820ec2c71c?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4NDc4Mjg1Nw&amp;ixlib=rb-4.0.3&amp;q=80&amp;utm_campaign=api-credit&amp;utm_medium=referral&amp;utm_source=unsplash_source&amp;w=1080" alt="" width="1080" height="1350">

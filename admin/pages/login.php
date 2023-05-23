@@ -14,7 +14,9 @@ if ( isset( $_SESSION['current_session'] ) ) {
 
 if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 	$login = test_input( $_POST['user_login'] );
+	// $email = test_input( $_POST['user_email'] );
 	$password = test_input( $_POST['user_password'] );
+	$password = hash('md5', $password);
 
 	$query = "SELECT *
 	FROM `users`
@@ -42,10 +44,10 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 	<form action="" method="POST">
 		<h1>Connexion</h1>
 
-		<div class="form-row">
+		<div class="form-row" novalidate>
 			<label for="user_login">Nom d'utilisateur</label>
 			<input id="user_login" type="text" name="user_login" placeholder="Nom d'utilisateur" value="<?php echo ( isset( $_POST['user_login'] ) ) ? $_POST['user_login'] : ''; ?>">
-			<!-- <input type="email" name="user_email" placeholder="Email d'utilisateur" value=""> -->
+			<!-- <input type="email" name="user_email" placeholder="Email d'utilisateur" value="<?php echo ( isset( $_POST['user_email'] ) ) ? $_POST['user_email'] : ''; ?>"> -->
 		</div>
 
 		<div class="form-row">
