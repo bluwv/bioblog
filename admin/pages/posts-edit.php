@@ -4,6 +4,10 @@ if ( ! isset( $_SESSION['current_session'] ) ) {
 	header('Location: index.php?page=login');
 }
 
+if ( isset( $_POST["submit"] ) || isset( $_POST["publish"] ) ) {
+	require ROOT . '/upload.php';
+}
+
 function test_input($data) {
 	$data = trim($data);
 	$data = stripslashes($data);
@@ -14,7 +18,7 @@ function test_input($data) {
 
 if ( isset( $_GET['id'] ) ) {
 	// Requête SQL catégories
-	$query = "SELECT post_title, post_date, post_content, user_login as author
+	$query = "SELECT post_title, post_date, post_content, post_thumbnail, user_login as author
 	FROM posts
 	LEFT JOIN users ON posts.post_author = users.id
 	WHERE posts.id = " . $_GET['id'];
@@ -27,6 +31,7 @@ if ( isset( $_GET['id'] ) ) {
 	}
 }
 
+$thumbnail = ( isset( $post->post_thumbnail ) ) ?  '../uploads/' . $post->post_thumbnail : "";
 $title = ( isset( $post->post_title ) ) ? $post->post_title : "";
 $content = ( isset( $post->post_content ) ) ? $post->post_content : "";
 
@@ -36,6 +41,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	$author = $_SESSION["current_session"]["user_id"];
 	$date = date('Y-m-d H:i:s');
 	$status = isset( $_POST['publish'] ) ? "publish" : "draft";
+	$thumbnail = $_FILES["fileToUpload"]["name"];
 
 	if ( isset( $_POST['delete'] ) ) {
 
@@ -54,12 +60,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$post_id =  $_GET['id'];
 
 			$query = "UPDATE `posts`
-			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status
+			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status, `post_thumbnail` = :post_thumbnail
 			WHERE `id` = :post_id";
 			$stmt = $pdo->prepare( $query );
 			$stmt->bindValue(":post_title", $title);
 			$stmt->bindValue(":post_content", $content);
 			$stmt->bindValue(":post_status", $status);
+			$stmt->bindValue(":post_thumbnail", $thumbnail);
 			$stmt->bindValue(":post_id", $post_id);
 			$stmt->execute();
 
@@ -67,8 +74,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 		} else {
 
-			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date)
-			VALUES ('$title', '$content', '$author', '$status', '$date')";
+			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date, post_thumbnail)
+			VALUES ('$title', '$content', '$author', '$status', '$date', '$thumbnail')";
 			$stmt = $pdo->prepare( $query );
 			$stmt->execute();
 
@@ -84,12 +91,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			$post_id =  $_GET['id'];
 
 			$query = "UPDATE `posts`
-			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status
+			SET `post_title` = :post_title, `post_content` = :post_content, `post_status` = :post_status, `post_thumbnail` = :post_thumbnail
 			WHERE `id` = :post_id";
 			$stmt = $pdo->prepare( $query );
 			$stmt->bindValue(":post_title", $title);
 			$stmt->bindValue(":post_content", $content);
 			$stmt->bindValue(":post_status", $status);
+			$stmt->bindValue(":post_thumbnail", $thumbnail);
 			$stmt->bindValue(":post_id", $post_id);
 			$stmt->execute();
 
@@ -97,8 +105,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 		} else {
 
-			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date)
-			VALUES ('$title', '$content', '$author', '$status', '$date')";
+			$query = "INSERT INTO `posts` (post_title, post_content, post_author, post_status, post_date, post_thumbnail)
+			VALUES ('$title', '$content', '$author', '$status', '$date', '$thumbnail')";
 			$stmt = $pdo->prepare( $query );
 			$stmt->execute();
 
@@ -116,10 +124,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <div class="edit">
 	<article>
-		<form action="" method="POST">
+		<form action="index.php?page=posts-edit&id=<?php echo $_GET["id"]; ?>" method="POST" enctype="multipart/form-data">
 			<div class="form-row">
 				<label for="post_thumbnail">Mon thumbnail</label>
-				<input id="post_thumbnail" class="" type="file" name="post_thumbnail" >
+				<img class="post_thumbnail" src="<?php echo $thumbnail; ?>" alt="">
+				<input id="fileToUpload" type="file" name="fileToUpload">
 			</div>
 
 			<div class="form-row">
@@ -135,7 +144,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			<div class="form-row">
 				<button type="submit" name="submit" value="draft">Sauver</button>
 				<button type="submit" name="publish" value="publish">Publier</button>
-				<button type="submit" name="delete">Supprimer</button>
+
+				<?php if ( isset ( $_GET['id'] ) ) : ?>
+					<button type="submit" name="delete">Supprimer</button>
+				<?php endif; ?>
 			</div>
 
 			<?php if ( ! empty( $message ) ) : ?>

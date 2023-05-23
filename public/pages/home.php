@@ -37,12 +37,12 @@ if ( isset( $_GET['category_id'] ) ) {
 	ORDER BY posts.post_date ASC
 	LIMIT "  . $limit_posts . " OFFSET " . $offset;
 } else {
-	$query = "SELECT posts.id as post_id, posts.post_title, posts.post_status
-	FROM posts
+	$query = "SELECT p.id as post_id, p.post_title, p.post_status, p.post_thumbnail
+	FROM posts p
 	-- LEFT JOIN users ON posts.post_author = users.id
 	-- LEFT JOIN categorie_post ON posts.id = categorie_post.id_post
 	-- LEFT JOIN categories ON categorie_post.id_categorie = categories.id
-	ORDER BY posts.post_date ASC
+	ORDER BY p.post_date ASC
 	LIMIT " . $limit_posts . " OFFSET " . $offset;
 }
 
@@ -70,14 +70,11 @@ $posts = $stmt->fetchAll();
 					<div class="post-card">
 						<a href="index.php?page=post&id=<?php echo $post->post_id; ?>">
 							<figure class="post-card-image">
-								<img src="//source.unsplash.com/weekly" alt="">
+								<img src="<?php echo '../uploads/'. $post->post_thumbnail; ?>" alt="">
 							</figure>
 
 							<div class="post-card-content">
-								<h3 class="post-card-title"><?php echo 'titre : ' . $post->post_title; ?></h3>
-								<!-- <p><?php echo 'contenu : ' . $post->post_content; ?></p> -->
-								<!-- <td><?php echo 'auteur : ' . $post->user_login; ?></td> -->
-								<!-- <td><?php echo 'date : ' . $post->post_date; ?></td> -->
+								<h3 class="post-card-title"><?php echo $post->post_title; ?></h3>
 							</div>
 						</a>
 					</div>
@@ -86,7 +83,7 @@ $posts = $stmt->fetchAll();
 		</section>
 
 		<div>
-			<?php if ( $total_posts <= $posts_per_page ) : ?>
+			<?php if ( $total_posts >= $limit_posts ) : ?>
 				<?php for ( $i = 1 ; $i <= $posts_per_page ; $i++ ) : ?>
 					<a href="index.php?offset=<?php echo $i; ?>"><?php echo $i; ?></a>
 				<?php endfor; ?>

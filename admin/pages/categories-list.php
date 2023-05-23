@@ -13,7 +13,9 @@ function test_input($data) {
 }
 
 // Requête SQL catégories
-$query = "SELECT categories.id, categories.name FROM categories";
+$query = "SELECT c.id, c.name
+FROM categories c
+ORDER BY c.name ASC";
 $stmt = $pdo->prepare( $query );
 $stmt->execute();
 $categories = $stmt->fetchAll();
