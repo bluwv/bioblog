@@ -13,15 +13,17 @@ if ( isset( $_SESSION['current_session'] ) ) {
 }
 
 if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
-	$login = test_input( $_POST['user_login'] );
 	// $email = test_input( $_POST['user_email'] );
+	$login = test_input( $_POST['user_login'] );
 	$password = test_input( $_POST['user_password'] );
 	$password = hash('md5', $password);
 
 	$query = "SELECT *
 	FROM `users`
-	WHERE user_login='$login' OR user_email='$login' AND user_password='$password'";
+	WHERE (user_login=:login OR user_email=:login) AND user_password=:password";
 	$stmt = $pdo->prepare( $query );
+	$stmt->bindValue(":login", $login);
+	$stmt->bindValue(":password", $password);
 	$stmt->execute();
 	$user = $stmt->fetch();
 
