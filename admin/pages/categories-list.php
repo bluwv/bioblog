@@ -78,17 +78,17 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		<?php endif; ?>
 	</form>
 
-	<form action="" method="POST">
-		<table>
-			<?php foreach( $categories as $categorie ) : ?>
-				<tr>
-					<td>
+	<table>
+		<?php foreach( $categories as $categorie ) : ?>
+			<tr>
+				<td>
+					<form action="" method="POST">
 						<input type="text" name="category_name" value="<?php echo $categorie->name; ?>">
 						<button type="submit" name="update" value="<?php echo $categorie->id; ?>">Modifier</button>
 						<button type="submit" name="delete" value="<?php echo $categorie->id; ?>">Supprimer</button>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-		</table>
-	</form>
+					</form>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
 </div>
