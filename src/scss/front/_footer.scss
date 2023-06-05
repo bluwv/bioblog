@@ -1,0 +1,5 @@
+.site-footer {
+	// @include container;
+	@extend %container;
+	margin-top: 80px;
+}

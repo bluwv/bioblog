@@ -1,0 +1,27 @@
+.post-card {
+	a {
+		text-decoration: none;
+		color: currentColor;
+	}
+}
+
+.post-card-title {
+	font-family: 'Playfair Display';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 32px;
+	color: $black;
+}
+
+.post-card-info {
+	margin-top: 16px;
+	font-family: 'Geom';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 14px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: $black;
+}

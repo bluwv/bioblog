@@ -6,7 +6,7 @@ $stmt->execute();
 $categories = $stmt->fetchAll();
 // var_dump($categories);
 
-$query = "SELECT post_title, post_date, post_content, user_login as author
+$query = "SELECT post_title, post_date, post_content, user_login as author, post_thumbnail
 FROM posts
 LEFT JOIN users ON posts.post_author = users.id
 WHERE posts.id = " . $_GET['id'];
@@ -18,10 +18,9 @@ $post = $stmt->fetch();
 
 ?>
 
-<div class="post">
-	<div class="post-card-content">
-		<h3 class="post-card-title"><?php echo $post->post_title; ?></h3>
-		<p><?php echo $post->author .' - '. $post->post_date; ?></p>
-		<?php echo $post->post_content; ?>
-	</div>
+<div class="single single-post">
+	<img class="thumbnail" src="../uploads/<?php echo $post->post_thumbnail; ?>" alt="">
+	<h3 class="title"><?php echo $post->post_title; ?></h3>
+	<p class="infos">Publié le <?php echo $post->post_date .' par '. $post->author; ?></p>
+	<p><?php echo $post->post_content; ?></p>
 </div>

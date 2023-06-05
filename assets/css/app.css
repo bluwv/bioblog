@@ -1,0 +1,404 @@
+/* GENERAL */
+:root {
+  --black: red;
+}
+
+body {
+  --black: yellow;
+}
+
+.site-content, .site-footer, .site-header {
+  margin: 0 auto;
+  padding: 0 8vw;
+  width: 100vw;
+  max-width: 1000px;
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.button {
+  display: block;
+  padding: 18px 24px;
+  width: 100%;
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #181922;
+  border: none;
+}
+
+.link {
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 9px;
+  text-align: center;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #181922;
+}
+
+/* FRONT */
+.site-footer {
+  margin-top: 80px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  margin: 60px auto 80px;
+}
+
+.logo {
+  margin-right: 40px;
+}
+
+.menu ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  list-style-type: none;
+}
+.menu li {
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #181922;
+}
+.menu a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.menu-item {
+  margin: 0 10px;
+}
+
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+@media screen and (min-width: 600px) {
+  .post-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 1200px) {
+  .post-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.post-card {
+  background-color: white;
+  box-shadow: 0 0 15px 0 #D9D9D9;
+}
+
+.post-card img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+}
+
+.post-card-image {
+  margin: 0;
+  line-height: 0;
+}
+
+.post-card-content {
+  padding: 20px;
+}
+
+.post-card-title {
+  margin: 0;
+}
+
+.posts-filter {
+  margin-bottom: 40px;
+}
+
+.posts-paginate {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin: 80px auto 80px;
+}
+.posts-paginate a {
+  display: block;
+  padding: 15px;
+  color: currentColor;
+  text-decoration: none;
+  background: #F4F5F8;
+  transition: all 0.2s ease-in-out;
+}
+.posts-paginate a:hover {
+  color: #fff;
+  background: #181922;
+}
+
+.single-post .thumbnail {
+  margin-bottom: 80px;
+  width: 100%;
+  height: auto;
+}
+.single-post .title {
+  --black: orange;
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 48px;
+  color: var(--black);
+}
+.single-post .infos {
+  margin: 20px 0 60px;
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #181922;
+}
+.single-post p {
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 34px;
+  color: #181922;
+}
+
+.post-card a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.post-card-title {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  color: #181922;
+}
+
+.post-card-info {
+  margin-top: 16px;
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #181922;
+}
+
+/* ADMIN */
+.admin {
+  display: flex;
+  height: 100vh;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px 20px;
+  width: 100%;
+  max-width: 300px;
+  color: #fff;
+  background: #181922;
+}
+.admin-nav a {
+  display: block;
+}
+.admin-nav .logo {
+  display: block;
+  margin: 0 auto;
+}
+.admin-nav nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 100%;
+}
+.admin-nav nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+.admin-nav nav ul li:first-child {
+  margin-top: auto;
+}
+.admin-nav nav ul li:last-child {
+  margin-top: auto;
+  margin-bottom: 0;
+  color: #FF003D;
+}
+.admin-nav a {
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+  letter-spacing: 0.25em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: currentColor;
+}
+
+.admin-content {
+  padding: 50px;
+  width: 100%;
+}
+
+table,
+table tr {
+  width: 100%;
+}
+
+table td {
+  padding: 10px;
+}
+
+table tr:nth-child(2n) {
+  background: #D9D9D9;
+}
+
+/* ADMIN */
+.post_thumbnail {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  max-height: 150px;
+}
+
+.admin-login {
+  background: #FFCEC0;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  height: 100%;
+}
+.login .logo {
+  display: block;
+  margin: 0 auto;
+}
+.login form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 40px 40px;
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+}
+.login form label {
+  display: block;
+  margin-bottom: 15px;
+  font-family: "Geom";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.login form input {
+  padding: 12px 24px;
+  width: 100%;
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #181922;
+  background: #F4F5F8;
+  border: none;
+}

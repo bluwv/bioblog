@@ -1,0 +1,38 @@
+.single-post {
+	.thumbnail {
+		margin-bottom: 80px;
+		width: 100%;
+		height: auto;
+	}
+
+	.title {
+		--black: orange;
+		font-family: 'Playfair Display';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 36px;
+		line-height: 48px;
+		color: var(--black);
+	}
+
+	.infos {
+		margin: 20px 0 60px;
+		font-family: 'Geom';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 14px;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: $black;
+	}
+
+	p {
+		font-family: 'Geom';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 20px;
+		line-height: 34px;
+		color: $black;
+	}
+}

@@ -27,9 +27,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		// Delete une ligne spécifique via l'id de la catégorie
 		$id_categorie = $_POST['delete'];
 
-		$query = "DELETE FROM `categories` WHERE id = ?";
+		$query = "DELETE
+		FROM `categories`
+		WHERE id = :category_id";
+
 		$stmt = $pdo->prepare( $query );
-		$stmt = $stmt->execute( array( $id_categorie ) );
+		$stmt->bindValue(":category_id",  array( $id_categorie ) );
+		$stmt = $stmt->execute();
 
 		$message = "Record deleted successfully.";
 

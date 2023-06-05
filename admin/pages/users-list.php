@@ -5,7 +5,8 @@ if ( ! isset( $_SESSION['current_session'] ) ) {
 }
 
 // Requête SQL catégories
-$query = "SELECT user_login, user_password, user_email FROM users";
+$query = "SELECT user_login, user_password, user_email
+FROM users";
 $stmt = $pdo->prepare( $query );
 $stmt->execute();
 $users = $stmt->fetchAll();

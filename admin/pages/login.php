@@ -44,7 +44,9 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 
 <div class="login">
 	<form action="" method="POST">
-		<h1>Connexion</h1>
+		<h1>
+			<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
+		</h1>
 
 		<div class="form-row" novalidate>
 			<label for="user_login">Nom d'utilisateur</label>
@@ -58,7 +60,7 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 		</div>
 
 		<div class="form-row">
-			<button type="submit" name="submit">Connexion</button>
+			<button class="button" type="submit" name="submit">Connexion</button>
 		</div>
 
 		<?php if ( ! empty( $message ) ) : ?>
@@ -67,4 +69,8 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 			</div>
 		<?php endif; ?>
 	</form>
+
+	<div>
+		<a class="link" href="../public">< Retour sur le site</p>
+	</div>
 </div>

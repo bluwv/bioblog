@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/app.css">
 
 	<meta property="og:title" content="The Rock" />
 	<meta property="og:type" content="video.movie" />
@@ -17,7 +17,10 @@
 	<article class="site">
 		<header class="site-header">
 			<div class="site-nav">
-				<a href="index.php">Bioblog</a>
+				<a class="logo" href="index.php">
+					<img src="../assets/images/logo-bioblog.png" alt="Bioblog">
+				</a>
+
 				<nav class="main-nav menu">
 					<ul>
 						<?php foreach ( $categories as $categorie ) : ?>
