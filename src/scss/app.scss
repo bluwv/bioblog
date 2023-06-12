@@ -2,21 +2,32 @@
 
 @import 'base/settings';
 @import 'base/reset';
+@import 'base/fonts';
 @import 'base/base';
 
 @import 'base/button';
+@import 'base/input';
 @import 'base/link';
 
 /* FRONT */
 
 @import 'front/header';
 @import 'front/footer';
-@import 'front/menu';
-@import 'front/front';
-@import 'front/post';
 @import 'front/card-post';
+@import 'front/front';
+@import 'front/menu';
+@import 'front/post';
 
 /* ADMIN */
 
 @import 'admin/admin';
+@import 'admin/categories';
+@import 'admin/edit';
+@import 'admin/form';
 @import 'admin/login';
+
+// @supports ( min-width: 100px ) {
+// 	.form-row {
+// 		min-width: 100px;
+// 	}
+// }

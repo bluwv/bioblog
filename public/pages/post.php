@@ -21,6 +21,6 @@ $post = $stmt->fetch();
 <div class="single single-post">
 	<img class="thumbnail" src="../uploads/<?php echo $post->post_thumbnail; ?>" alt="">
 	<h3 class="title"><?php echo $post->post_title; ?></h3>
-	<p class="infos">Publié le <?php echo $post->post_date .' par '. $post->author; ?></p>
+	<p class="infos">Publié le <?php echo date_format( date_create( $post->post_date ), "d.m.Y" ) .' par '. $post->author; ?></p>
 	<p><?php echo $post->post_content; ?></p>
 </div>

@@ -75,7 +75,7 @@ $posts = $stmt->fetchAll();
 
 							<div class="post-card-content">
 								<h3 class="post-card-title"><?php echo $post->post_title; ?></h3>
-								<p class="post-card-info"><?php echo $post->post_date .' - '. $post->author; ?></p>
+								<p class="post-card-info"><?php echo date_format( date_create( $post->post_date ), "d.m.Y" ) .' - '. $post->author; ?></p>
 							</div>
 						</a>
 					</div>

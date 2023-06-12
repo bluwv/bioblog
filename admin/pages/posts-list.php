@@ -39,23 +39,36 @@ $posts = $stmt->fetchAll();
 ?>
 
 <div class="posts">
-	<a href="index.php?page=posts-edit">Ajouter un nouvel article</a>
+	<h2 class="title">Mes articles</h2>
+
+	<a class="button" href="index.php?page=posts-edit">Ajouter un nouvel article</a>
+
 	<table>
-		<?php foreach( $posts as $post ) : ?>
+		<thead>
 			<tr>
-				<td>
-					<a href="index.php?page=posts-edit&id=<?php echo $post->slug; ?>">
-						<?php echo $post->post_title; ?>
-					</a>
-				</td>
-				<td>
-					<?php echo $post->post_status; ?>
-				</td>
-				<td>
-					<?php echo $post->post_date; ?>
-				</td>
+				<th>Titre</th>
+				<th>Status</th>
+				<th>Création</th>
 			</tr>
-		<?php endforeach; ?>
+		</thead>
+
+		<tbody>
+			<?php foreach( $posts as $post ) : ?>
+				<tr>
+					<td>
+						<a href="index.php?page=posts-edit&id=<?php echo $post->slug; ?>">
+							<?php echo $post->post_title; ?>
+						</a>
+					</td>
+					<td>
+						<?php echo $post->post_status; ?>
+					</td>
+					<td>
+						<?php echo date_format( date_create( $post->post_date ), "d/m/Y H:i:s" ); ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
 	</table>
 
 	<div>

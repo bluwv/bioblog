@@ -1,7 +1,6 @@
 .button {
-	display: block;
+	display: inline-block;
 	padding: 18px 24px;
-	width: 100%;
 	font-family: 'Geom';
 	font-style: normal;
 	font-weight: 600;
@@ -9,7 +8,38 @@
 	line-height: 9px;
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
+	text-decoration: none;
 	color: $white;
 	background: $black;
 	border: none;
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+
+	&:hover {
+		background: lighten($black, 10%);
+	}
+}
+
+.button-primary {
+	background: $black;
+
+	&:hover {
+		background: lighten($black, 10%);
+	}
+}
+
+.button-secondary {
+	background: $grey;
+
+	&:hover {
+		background: lighten($grey, 10%);
+	}
+}
+
+.button-delete {
+	background: $red;
+
+	&:hover {
+		background: lighten($red, 10%);
+	}
 }

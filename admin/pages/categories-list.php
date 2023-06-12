@@ -70,10 +70,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 ?>
 
 <div class="categories">
+	<h2 class="title">Mes catégories</h2>
+
 	<form action="" method="POST">
 		<label for="">Ajouter une nouvelle catégorie</label>
 		<input type="text" name="category_name" placeholder="Ma catégorie">
-		<button type="submit" name="create">Ajouter</button>
+		<button class="button button-primary" type="submit" name="create">Ajouter</button>
 
 		<?php if ( ! empty( $message ) ) : ?>
 			<div class="form-row">
@@ -88,8 +90,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 				<td>
 					<form action="" method="POST">
 						<input type="text" name="category_name" value="<?php echo $categorie->name; ?>">
-						<button type="submit" name="update" value="<?php echo $categorie->id; ?>">Modifier</button>
-						<button type="submit" name="delete" value="<?php echo $categorie->id; ?>">Supprimer</button>
+						<button class="button button-primary" type="submit" name="update" value="<?php echo $categorie->id; ?>">Modifier</button>
+						<button class="button button-delete" type="submit" name="delete" value="<?php echo $categorie->id; ?>">Supprimer</button>
 					</form>
 				</td>
 			</tr>

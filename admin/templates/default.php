@@ -6,11 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="../assets/css/app.css">
 
 	<?php if ( $page === 'posts-edit' ) : ?>
 	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<?php endif; ?>
+
+	<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 </head>
 
 <body>
@@ -18,29 +23,31 @@
 
 		<?php if ( isset( $_SESSION['current_session'] ) ) : ?>
 			<header class="admin-nav">
-				<a href="">
-					<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
-				</a>
+				<div class="admin-nav-container">
+					<a href="">
+						<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
+					</a>
 
-				<nav>
-					<ul>
-						<li>
-							<a href="index.php">Dashboard</a>
-						</li>
-						<li>
-							<a href="index.php?page=posts-list">Articles</a>
-						</li>
-						<li>
-							<a href="index.php?page=categories-list">Catégories</a>
-						</li>
-						<li>
-							<a href="index.php?page=users-list">Utilisateurs</a>
-						</li>
-						<li>
-							<a href="index.php?page=logout">Se déconnecter</a>
-						</li>
-					</ul>
-				</nav>
+					<nav>
+						<ul>
+							<li>
+								<a href="index.php">Dashboard</a>
+							</li>
+							<li>
+								<a href="index.php?page=posts-list">Articles</a>
+							</li>
+							<li>
+								<a href="index.php?page=categories-list">Catégories</a>
+							</li>
+							<li>
+								<a href="index.php?page=users-list">Utilisateurs</a>
+							</li>
+							<li>
+								<a href="index.php?page=logout">Se déconnecter</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
 			</header>
 		<?php endif; ?>
 
@@ -50,7 +57,7 @@
 	</article>
 
 	<?php if ( $page === 'posts-edit' ) : ?>
-		<script>
+		<!-- <script>
 			tinymce.init({
 			selector: 'textarea',
 			plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
@@ -62,7 +69,7 @@
 				{ value: 'Email', title: 'Email' },
 			]
 			});
-		</script>
+		</script> -->
 	<?php endif; ?>
 </body>
 </html>

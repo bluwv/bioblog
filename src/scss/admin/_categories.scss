@@ -1,0 +1,22 @@
+.admin-categories-list {
+	.categories > form {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		max-width: 500px;
+
+		label {
+			grid-column: 1 / -1;
+		}
+	}
+
+	table {
+		td,
+		th {
+			background-color: white;
+		}
+
+		form {
+			display: flex;
+		}
+	}
+}

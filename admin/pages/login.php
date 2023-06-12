@@ -1,6 +1,11 @@
 <?php
+// https://codeforgeek.com/google-recaptcha-tutorial/
+// https://mailtrap.io/blog/php-email-sending/
+// https://developers.google.com/recaptcha/docs/faq?hl=fr#id-like-to-run-automated-tests-with-recaptcha-v2-what-should-i-do
+$siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+$secret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 
-function test_input($data) {
+function test_input($data) { // sanitizeInput
 	$data = trim($data);
 	$data = stripslashes($data);
 	$data = htmlspecialchars($data);
@@ -13,6 +18,12 @@ if ( isset( $_SESSION['current_session'] ) ) {
 }
 
 if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
+	// $recaptchaResponse = test_input($_POST['g-recaptcha']);
+	// var_dump($recaptchaResponse);
+	// $recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$recaptchaResponse}";
+	// $verify = json_decode(file_get_contents($recaptchaUrl));
+	// var_dump($verify);
+
 	// $email = test_input( $_POST['user_email'] );
 	$login = test_input( $_POST['user_login'] );
 	$password = test_input( $_POST['user_password'] );
@@ -43,7 +54,7 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 ?>
 
 <div class="login">
-	<form action="" method="POST">
+	<form id="login-form" action="" method="POST">
 		<h1>
 			<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
 		</h1>
@@ -60,7 +71,8 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 		</div>
 
 		<div class="form-row">
-			<button class="button" type="submit" name="submit">Connexion</button>
+			<!-- <div class="g-recaptcha" data-sitekey="<?php echo $siteKey ?>"></div> -->
+			<button class="button" type="submit" name="submit" data-sitekey="<?php echo $siteKey ?>" data-callback='onRecaptchaSuccess'>Connexion</button>
 		</div>
 
 		<?php if ( ! empty( $message ) ) : ?>
@@ -74,3 +86,9 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 		<a class="link" href="../public">< Retour sur le site</p>
 	</div>
 </div>
+
+<script>
+	function onRecaptchaSuccess() {
+		document.getElementById('login-form').submit();
+	}
+</script>

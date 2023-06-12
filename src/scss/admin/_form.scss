@@ -1,0 +1,7 @@
+.form-row {
+	.error {
+		padding: 15px 20px;
+		color: $red;
+		background-color: lighten($red, 40%);
+	}
+}

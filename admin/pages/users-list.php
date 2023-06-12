@@ -14,13 +14,21 @@ $users = $stmt->fetchAll();
 ?>
 
 <div class="users">
+	<h2 class="title">Mes utilisateurs</h2>
+
 	<table>
-		<?php if ($users) : ?>
-			<?php foreach( $users as $user ) : ?>
-				<tr>
-					<td><?php echo $user->user_login; ?></td>
-				</tr>
-			<?php endforeach; ?>
-		<?php endif; ?>
+		<thead>
+			<th>Nom</th>
+		</thead>
+
+		<tbody>
+			<?php if ($users) : ?>
+				<?php foreach( $users as $user ) : ?>
+					<tr>
+						<td><?php echo $user->user_login; ?></td>
+					</tr>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</tbody>
 	</table>
 </div>

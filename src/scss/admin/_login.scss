@@ -7,8 +7,16 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 30px;
 	height: 100%;
+
+	@supports ( gap: 30px ) {
+		// GAP ne fonctionne pas avec display flex
+		// gap: 30px;
+	}
+
+	& > * {
+		margin: 15px 0;
+	}
 
 	.logo {
 		display: block;
@@ -19,35 +27,22 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		gap: 30px;
 		padding: 20px 40px 40px;
 		width: 100%;
 		max-width: 400px;
 		background: $white;
 
-		label {
-			display: block;
-			margin-bottom: 15px;
-			font-family: 'Geom';
-			font-style: normal;
-			font-weight: 500;
-			font-size: 10px;
-			line-height: 10px;
-			letter-spacing: 0.25em;
-			text-transform: uppercase;
+		@supports ( gap: 30px ) {
+			// GAP ne fonctionne pas avec display flex
+			// gap: 30px;
 		}
 
-		input {
-			padding: 12px 24px;
+		& > * {
+			margin: 15px 0;
+		}
+
+		[type="submit"] {
 			width: 100%;
-			font-family: 'Playfair Display';
-			font-style: normal;
-			font-weight: 400;
-			font-size: 16px;
-			line-height: 26px;
-			color: $black;
-			background: $grey-50;
-			border: none;
 		}
 	}
 }

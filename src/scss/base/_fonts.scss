@@ -1,0 +1,45 @@
+// Convertir un fichier OTF/TTF en format web (WOFF, WOFF2, SVG, …)
+// https://transfonter.org/
+// https://www.fontsquirrel.com/tools/webfont-generator
+
+@font-face {
+	font-family: 'Geom';
+	src: url('../../fonts/Geom-Light.eot');
+	src: url('../../fonts/Geom-Light.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/Geom-Light.woff2') format('woff2'),
+		 url('../../fonts/Geom-Light.woff') format('woff'),
+		 url('../../fonts/Geom-Light.ttf') format('truetype'),
+		 url('../../fonts/Geom-Light.svg#Geom-Light') format('svg');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geom';
+	src: url('../../fonts/Geom-Ultra.eot');
+	src: url('../../fonts/Geom-Ultra.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/Geom-Ultra.woff2') format('woff2'),
+		 url('../../fonts/Geom-Ultra.woff') format('woff'),
+		 url('../../fonts/Geom-Ultra.ttf') format('truetype'),
+		 url('../../fonts/Geom-Ultra.svg#Geom-Ultra') format('svg');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@mixin font-family( $family, $style:normal, $weight:400 ) {
+	font-family: $family;
+	font-style: $style;
+	font-weight: $weight;
+}
+
+@mixin font-size( $size, $height ) {
+	font-size: #{$size}px;
+	line-height: #{$height}px;
+}
+
+@mixin font($family, $size, $height) {
+	@include font-family($family);
+	@include font-size($size, $height);
+}
