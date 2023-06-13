@@ -19,6 +19,14 @@ if ( isset( $_GET['page'] ) ) {
 	$page = 'login';
 }
 
+// Check if last activity was set
+$session_limit = 21600; // Après 12h -> 60s * 60m * 12h
+if ( isset( $_SESSION['current_session']['last_activity'] ) && time() - $_SESSION['current_session']['last_activity'] > $session_limit ) {
+	session_unset();
+	session_destroy();
+	header('Location: index.php?page=login');
+}
+
 // Initialisation du templating
 ob_start();
 if ( $page === 'login' ) {

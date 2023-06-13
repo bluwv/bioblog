@@ -43,7 +43,8 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 			'status' => 1,
 			'user_id' => $user->id,
 			'user_login' => $user->user_login,
-			'date_time' => date('Y-m-d H:i:s'),
+			'date_time' => date('d-m-Y H:i:s'),
+			'last_activity' => time(),
 		);
 		header('Location: index.php?page=posts-list');
 	} else {
