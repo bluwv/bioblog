@@ -18,16 +18,18 @@ if ( isset( $_SESSION['current_session'] ) ) {
 }
 
 if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
-	// $recaptchaResponse = test_input($_POST['g-recaptcha']);
-	// var_dump($recaptchaResponse);
-	// $recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$recaptchaResponse}";
-	// $verify = json_decode(file_get_contents($recaptchaUrl));
-	// var_dump($verify);
-
 	// $email = test_input( $_POST['user_email'] );
 	$login = test_input( $_POST['user_login'] );
 	$password = test_input( $_POST['user_password'] );
 	$password = hash('md5', $password);
+	$recaptchaResponse = test_input($_POST['g-recaptcha-response']);
+
+	$recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$recaptchaResponse}";
+	$verify = json_decode(file_get_contents($recaptchaUrl));
+
+	if (!$verify->success) {
+		$errors[] = 'Recaptcha failed';
+	}
 
 	$query = "SELECT *
 	FROM `users`
@@ -54,6 +56,8 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 
 ?>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <div class="login">
 	<form id="login-form" action="" method="POST">
 		<h1>
@@ -72,8 +76,7 @@ if ( isset( $_POST['user_login'], $_POST['user_password'] ) ) {
 		</div>
 
 		<div class="form-row">
-			<!-- <div class="g-recaptcha" data-sitekey="<?php echo $siteKey ?>"></div> -->
-			<button class="button" type="submit" name="submit" data-sitekey="<?php echo $siteKey ?>" data-callback='onRecaptchaSuccess'>Connexion</button>
+			<button class="g-recaptcha button" type="submit" data-sitekey="<?php echo $siteKey ?>" data-callback='onRecaptchaSuccess'>Connexion</button>
 		</div>
 
 		<?php if ( ! empty( $message ) ) : ?>

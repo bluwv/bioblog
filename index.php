@@ -1,11 +1,14 @@
 <?php
 
+// https://mailtrap.io/blog/php-email-sending/
+
 // Affichage des erreurs
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
@@ -13,17 +16,19 @@ require 'vendor/autoload.php';
 $errors = [];
 $errorMessage = '';
 $successMessage = '';
-$siteKey = ''; // reCAPTCHA site key
-$secret = ''; // reCAPTCHA secret key
+$siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+$secret = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$name = sanitizeInput($_POST['name']);
 	$email = sanitizeInput($_POST['email']);
 	$message = sanitizeInput($_POST['message']);
 	$recaptchaResponse = sanitizeInput($_POST['g-recaptcha-response']);
+	// var_dump($recaptchaResponse);
 
 	$recaptchaUrl = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$recaptchaResponse}";
 	$verify = json_decode(file_get_contents($recaptchaUrl));
+	// var_dump($verify);
 
 	if (!$verify->success) {
 		$errors[] = 'Recaptcha failed';
@@ -51,11 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$mail = new PHPMailer(true);
 		try {
 			// Configure the PHPMailer instance
+			// $mail->SMTPDebug = SMTP::DEBUG_SERVER; // for detailed debug output
 			$mail->isSMTP();
-			$mail->Host = 'live.smtp.mailtrap.io';
+			$mail->Host = 'smtp.gmail.com';
 			$mail->SMTPAuth = true;
-			$mail->Username = '';
-			$mail->Password = '';
+			$mail->Username = 'adrienpierrewv@gmail.com';
+			$mail->Password = 'yyvlwpgfohvbdtoo';
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 			$mail->Port = 587;
 
@@ -66,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$mail->isHTML(true);
 			$mail->Body = "<p>Name: {$name}</p><p>Email: {$email}</p><p>Message: {$message}</p>";
 
+			// var_dump($mail);
 			// Send the message
 			$mail->send();
 
@@ -90,7 +97,7 @@ function sanitizeInput($input)
 
 <body>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-	<form action="/" method="post" id="contact-form">
+	<form action="" method="post" id="contact-form">
 		<h2>Contact us</h2>
 		<?php echo ((!empty($errorMessage)) ? $errorMessage : '') ?>
 		<?php echo ((!empty($successMessage)) ? $successMessage : '') ?>

@@ -55,15 +55,15 @@ $posts = $stmt->fetchAll();
 		<tbody>
 			<?php foreach( $posts as $post ) : ?>
 				<tr>
-					<td>
+					<td data-label="Titre">
 						<a href="index.php?page=posts-edit&id=<?php echo $post->slug; ?>">
 							<?php echo $post->post_title; ?>
 						</a>
 					</td>
-					<td>
+					<td data-label="Status">
 						<?php echo $post->post_status; ?>
 					</td>
-					<td>
+					<td data-label="Création">
 						<?php echo date_format( date_create( $post->post_date ), "d/m/Y H:i:s" ); ?>
 					</td>
 				</tr>

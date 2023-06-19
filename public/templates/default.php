@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +25,11 @@
 					<img src="../assets/images/logo-bioblog.png" alt="Bioblog">
 				</a>
 
-				<nav class="main-nav menu">
+				<button class="burger" data-menu="front-menu">
+					<span>Menu</span>
+				</button>
+
+				<nav id="front-menu" class="main-nav menu">
 					<ul>
 						<?php foreach ( $categories as $categorie ) : ?>
 							<li class="menu-item">
@@ -44,5 +48,7 @@
 		<footer class="site-footer"></footer>
 
 	</article>
+
+	<script src="../assets/app.js"></script>
 </body>
 </html>

@@ -27,6 +27,11 @@ $limit_posts = 6;
 $posts_per_page = ceil( $total_posts / $limit_posts );
 $offset = ($offset - 1) * $limit_posts;
 
+/**
+ * Affiche les posts correspondants à :
+ * - la page home = tous les posts
+ * - la page d'un post = uniquement une catégorie
+ */
 if ( isset( $_GET['category_id'] ) ) {
 	$query = "SELECT *, posts.id as post_id
 	FROM posts

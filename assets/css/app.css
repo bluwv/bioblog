@@ -90,6 +90,55 @@ table {
   box-sizing: border-box;
 }
 
+@media screen and (max-width: 800px) {
+  .burger {
+    display: block;
+    margin-bottom: 15px;
+    font-family: "Geom";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    z-index: 10;
+    display: block;
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .burger:focus {
+    outline: none;
+  }
+  .admin .burger {
+    color: #fff;
+  }
+  .burger::before, .burger::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+  }
+  .burger::before {
+    margin-top: -12px;
+  }
+  .burger::after {
+    margin-top: 10px;
+  }
+}
+@media screen and (min-width: 801px) {
+  .burger {
+    display: none;
+  }
+}
+
 .button {
   display: inline-block;
   padding: 18px 24px;
@@ -233,12 +282,12 @@ textarea {
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 601px) {
   .post-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
   .post-list {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -299,6 +348,11 @@ textarea {
   align-items: center;
   margin: 60px auto 80px;
 }
+@media screen and (max-width: 800px) {
+  .site-nav {
+    justify-content: space-between;
+  }
+}
 
 .logo {
   margin-right: 40px;
@@ -308,10 +362,10 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
   list-style-type: none;
 }
 .menu li {
+  margin: 20px;
   font-family: "Geom";
   font-style: normal;
   font-weight: 500;
@@ -325,7 +379,24 @@ textarea {
   color: currentColor;
   text-decoration: none;
 }
-
+@media screen and (max-width: 800px) {
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFCEC0;
+  }
+  .menu:not(.active) {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .menu ul {
+    flex-direction: column;
+    height: 100%;
+  }
+}
 .menu-item {
   margin: 0 10px;
 }
@@ -370,11 +441,13 @@ textarea {
   height: 100vh;
 }
 
-.admin:not(.admin-login) {
-  display: grid;
-  grid-template-columns: clamp(300px, 20vw, 400px) 1fr;
+@media screen and (min-width: 801px) {
+  .admin:not(.admin-login) {
+    display: grid;
+    grid-template-columns: clamp(300px, 20vw, 400px) 1fr;
+  }
 }
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1401px) {
   .admin:not(.admin-login).admin-posts-edit {
     grid-template-columns: clamp(300px, 20vw, 400px) 1fr clamp(300px, 20vw, 400px);
   }
@@ -387,16 +460,21 @@ textarea {
 
 .admin-nav-container {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 50px 20px;
-  width: clamp(300px, 20vw, 400px);
-  height: 100vh;
+  padding: 20px;
   color: #fff;
   background: #181922;
+}
+@media screen and (min-width: 801px) {
+  .admin-nav-container {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 50px 20px;
+    width: clamp(300px, 20vw, 400px);
+    height: 100vh;
+  }
 }
 .admin-nav-container a {
   display: block;
@@ -413,19 +491,44 @@ textarea {
 }
 .admin-nav-container nav ul {
   display: flex;
-  flex-direction: column;
   height: 100%;
 }
 .admin-nav-container nav ul > * {
-  margin: 10px 0;
-}
-.admin-nav-container nav ul li:first-child {
-  margin-top: auto;
+  margin: 10px;
 }
 .admin-nav-container nav ul li:last-child {
-  margin-top: auto;
-  margin-bottom: 0;
   color: #FF003D;
+}
+@media screen and (min-width: 801px) {
+  .admin-nav-container nav ul {
+    flex-direction: column;
+  }
+  .admin-nav-container nav ul li:first-child {
+    margin-top: auto;
+  }
+  .admin-nav-container nav ul li:last-child {
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  .admin-nav-container nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #181922;
+  }
+  .admin-nav-container nav:not(.active) {
+    pointer-events: none;
+    opacity: 0;
+  }
+  .admin-nav-container nav ul {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
 }
 .admin-nav-container a {
   font-family: "Geom";
@@ -440,8 +543,13 @@ textarea {
 }
 
 .admin-content {
-  padding: 50px;
+  padding: 50px 20px;
   width: 100%;
+}
+@media screen and (min-width: 801px) {
+  .admin-content {
+    padding: 50px;
+  }
 }
 
 /* ADMIN */
@@ -467,23 +575,46 @@ table {
   margin-top: 20px;
   width: 100%;
 }
-table tr td:nth-child(1) {
-  width: 100%;
-  min-width: 300px;
+@media screen and (max-width: 1200px) {
+  table thead {
+    display: none;
+  }
 }
-table tr td:nth-child(2) {
-  min-width: 200px;
-}
-table tr td:nth-child(3) {
-  min-width: 200px;
+@media screen and (max-width: 1200px) {
+  table tr {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #DDDFE4;
+  }
 }
 table tr:nth-child(2n) {
   background: #F4F5F8;
 }
-table td,
+@media screen and (min-width: 801px) {
+  table tr td:nth-child(1) {
+    width: 100%;
+    min-width: 300px;
+  }
+  table tr td:nth-child(2) {
+    min-width: 200px;
+  }
+  table tr td:nth-child(3) {
+    min-width: 200px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  table td,
 table th {
-  padding: 20px;
-  border: 1px solid #DDDFE4;
+    margin: 10px 0;
+  }
+}
+@media screen and (min-width: 1201px) {
+  table td,
+table th {
+    padding: 20px;
+    border: 1px solid #DDDFE4;
+  }
 }
 table td {
   font-family: "Playfair Display";
@@ -491,6 +622,22 @@ table td {
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
+}
+@media screen and (max-width: 1200px) {
+  table td::before {
+    content: attr(data-label);
+    display: block;
+    display: block;
+    margin-bottom: 15px;
+    font-family: "Geom";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0;
+  }
 }
 table td a {
   text-decoration: none;
@@ -567,7 +714,7 @@ table th {
   font-size: 16px;
   line-height: 26px;
 }
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1401px) {
   .admin-posts-edit form .form-row--settings {
     display: flex;
     flex-direction: column;

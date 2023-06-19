@@ -1,4 +1,5 @@
 $admin-sidebar-width: clamp(300px, 20vw, 400px);
+$breakpoint-admin-nav: $m;
 
 .admin-login {
 	display: flex;
@@ -6,11 +7,13 @@ $admin-sidebar-width: clamp(300px, 20vw, 400px);
 }
 
 .admin:not(.admin-login) {
-	display: grid;
-	grid-template-columns: $admin-sidebar-width 1fr;
+	@media screen and (min-width:$breakpoint-admin-nav + 1) {
+		display: grid;
+		grid-template-columns: $admin-sidebar-width 1fr;
+	}
 
 	&.admin-posts-edit {
-		@media screen and (min-width:$xl) {
+		@media screen and (min-width:$xl + 1) {
 			grid-template-columns: $admin-sidebar-width 1fr $admin-sidebar-width;
 		}
 	}
@@ -23,14 +26,18 @@ $admin-sidebar-width: clamp(300px, 20vw, 400px);
 
 .admin-nav-container {
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	position: fixed;
-	top: 0;
-	left: 0;
-	padding: 50px 20px;
-	width: $admin-sidebar-width;
-	height: 100vh;
+	padding: 20px;
+
+	@media screen and (min-width:$breakpoint-admin-nav + 1) {
+		flex-direction: column;
+		position: fixed;
+		top: 0;
+		left: 0;
+		padding: 50px 20px;
+		width: $admin-sidebar-width;
+		height: 100vh;
+	}
 	color: $white;
 	background: $black;
 
@@ -51,23 +58,49 @@ $admin-sidebar-width: clamp(300px, 20vw, 400px);
 
 		ul {
 			display: flex;
-			flex-direction: column;
 			// GAP ne fonctionne pas avec display flex
 			// gap: 20px;
 			height: 100%;
 
 			& > * {
-				margin: 10px 0;
-			}
-
-			li:first-child { // Empecher articles de coller au logo
-				margin-top: auto;
+				margin: 10px;
 			}
 
 			li:last-child { // Envoyer se déconnecter tout en bas
-				margin-top: auto;
-				margin-bottom: 0;
 				color: $red;
+			}
+
+			@media screen and (min-width:$breakpoint-admin-nav + 1) {
+				flex-direction: column;
+
+				li:first-child { // Empecher articles de coller au logo
+					margin-top: auto;
+				}
+
+				li:last-child { // Envoyer se déconnecter tout en bas
+					margin-top: auto;
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		@media screen and (max-width:$breakpoint-admin-nav) {
+			&:not(.active) {
+				pointer-events: none;
+				opacity: 0;
+			}
+
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: $black;
+
+			ul {
+				flex-direction: column;
+				align-items: center;
+				height: auto
 			}
 		}
 	}
@@ -82,8 +115,12 @@ $admin-sidebar-width: clamp(300px, 20vw, 400px);
 }
 
 .admin-content {
-	padding: 50px;
+	padding: 50px 20px;
 	width: 100%;
+
+	@media screen and (min-width:$m + 1) {
+		padding: 50px;
+	}
 }
 
 /* ADMIN */
@@ -107,32 +144,62 @@ table {
 	margin-top: 20px;
 	width: 100%;
 
+	thead {
+		@media screen and (max-width:$l) {
+			display: none;
+		}
+	}
+
 	tr {
-		td:nth-child(1) {
-			width: 100%;
-			min-width: 300px;
-		}
-
-		td:nth-child(2) {
-			min-width: 200px;
-		}
-
-		td:nth-child(3) {
-			min-width: 200px;
+		@media screen and (max-width:$l) {
+			display: flex;
+			flex-direction: column;
+			padding: 20px;
+			border: 1px solid #DDDFE4;
 		}
 
 		&:nth-child(2n) {
 			background: $grey-50;
 		}
+
+		@media screen and (min-width:$m + 1) {
+			td:nth-child(1) {
+				width: 100%;
+				min-width: 300px;
+			}
+
+			td:nth-child(2) {
+				min-width: 200px;
+			}
+
+			td:nth-child(3) {
+				min-width: 200px;
+			}
+		}
 	}
 
 	td,
 	th {
-		padding: 20px;
-		border: 1px solid #DDDFE4;
+		@media screen and (max-width:$l) {
+			margin: 10px 0;
+		}
+
+		@media screen and (min-width:$l + 1) {
+			padding: 20px;
+			border: 1px solid #DDDFE4;
+		}
 	}
 
 	td {
+		@media screen and (max-width:$l) {
+			&::before {
+				content: attr(data-label);
+				display: block;
+				@include label;
+				margin: 0;
+			}
+		}
+
 		@include font( 'Playfair Display', 16, 21 );
 
 		a {

@@ -14,8 +14,6 @@
 	<?php if ( $page === 'posts-edit' ) : ?>
 	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<?php endif; ?>
-
-	<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 </head>
 
 <body>
@@ -28,11 +26,15 @@
 						<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
 					</a>
 
-					<nav>
+					<button class="burger" data-menu="admin-menu">
+						<span>Menu</span>
+					</button>
+
+					<nav id="admin-menu">
 						<ul>
-							<li>
+							<!-- <li>
 								<a href="index.php">Dashboard</a>
-							</li>
+							</li> -->
 							<li>
 								<a href="index.php?page=posts-list">Articles</a>
 							</li>
@@ -56,6 +58,7 @@
 		</main>
 	</article>
 
+	<script src="../assets/app.js"></script>
 	<?php if ( $page === 'posts-edit' ) : ?>
 		<!-- <script>
 			tinymce.init({
