@@ -22,7 +22,7 @@
 		<?php if ( isset( $_SESSION['current_session'] ) ) : ?>
 			<header class="admin-nav">
 				<div class="admin-nav-container">
-					<a href="">
+					<a href="../public">
 						<img class="logo" src="../assets/images/logo-bioblog.png" alt="Connexion">
 					</a>
 
