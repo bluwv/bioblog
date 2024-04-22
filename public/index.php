@@ -28,7 +28,7 @@ $statement = $pdo->prepare( $query );
 $statement->execute();
 $total_posts = $statement->fetch(); // $total_posts['n']
 
-$pagination = (ceil( $total_posts['n'] / $num_posts ) + 1);
+$pagination = ( ceil( $total_posts['n'] / $num_posts ) + 1 );
 
 // Check si il y a de la pagination active si pas alors je suis en pagination 1 par défaut
 $p = ( isset( $_GET['p'] ) ) ? $_GET['p'] : 1;
@@ -46,6 +46,8 @@ $query = 'SELECT * FROM posts LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
 $statement = $pdo->prepare( $query );
 $statement->execute();
 $posts = $statement->fetchAll();
+
+$pdo = null;
 
 ?>
 
