@@ -20,7 +20,7 @@ function limit_text($text, $limit) {
 }
 
 // Nombre de posts à afficher
-$num_posts = 1;
+$num_posts = 6;
 
 // Récupère le nombre total de posts présent dans la db
 $query = 'SELECT count(id) as n FROM posts';
@@ -28,6 +28,7 @@ $statement = $pdo->prepare( $query );
 $statement->execute();
 $total_posts = $statement->fetch(); // $total_posts['n']
 
+// Calcul de si la pagination est nécessaire
 $pagination = ( ceil( $total_posts['n'] / $num_posts ) + 1 );
 
 // Check si il y a de la pagination active si pas alors je suis en pagination 1 par défaut
@@ -39,14 +40,17 @@ if ($p == 0 || $p > $pagination) {
 	exit;
 }
 
+// Utile pour la pagniation
+// ! bien lui retirer 1 unité pour commencer à 0 (array start at 1 :D)
 $offset = ($num_posts * $p);
 
-// Récupère tous les articles/posts avec une pagination déjà en place et je positionne mon offset à 0 (en retirant 1 de base (array start at 1))
+// Récupère tous les articles/posts avec une pagination déjà en place et je positionne mon offset à 0 (en retirant 1 de base)
 $query = 'SELECT * FROM posts LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
 $statement = $pdo->prepare( $query );
 $statement->execute();
 $posts = $statement->fetchAll();
 
+// Bien fermer la connexion
 $pdo = null;
 
 ?>
@@ -62,29 +66,7 @@ $pdo = null;
 </head>
 <body>
 
-	<header>
-		<a href="">
-			<img src="" alt="">
-		</a>
-
-		<menu>
-			<li>
-				<a href="">Catégorie 1</a>
-			</li>
-			<li>
-				<a href="">Catégorie 2</a>
-			</li>
-			<li>
-				<a href="">Catégorie 3</a>
-			</li>
-			<li>
-				<a href="">Catégorie 4</a>
-			</li>
-			<li>
-				<a href="">Catégorie 5</a>
-			</li>
-		</menu>
-	</header>
+	<?php include_once 'includes/header.php'; ?>
 
 	<main>
 		<form action="GET">
@@ -102,7 +84,7 @@ $pdo = null;
 
 		<section>
 			<?php foreach ( $posts as $post ) : ?>
-				<?php if ( $post["status"] == 1 ) : ?>
+				<?php if ( $post["status"] == 1 ) : // Si == 1 alors le post est publié ?>
 					<article id="post-<?php echo $post["id"]; ?>">
 						<a href="single.php">
 							<img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt="">
@@ -113,10 +95,11 @@ $pdo = null;
 							<a href="">Catégorie 2</a>
 							<a href="">Catégorie 3</a>
 						</div>
+
 						<h2>
 							<a href="single.php"><?php echo $post["title"]; ?></a>
 						</h2>
-						<p><?php echo $post["content"]; ?></p>
+						<p><?php echo limit_text($post["content"], 20); ?></p>
 					</article>
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -134,6 +117,8 @@ $pdo = null;
 			</ol>
 		<?php endif; ?>
 	</main>
+
+	<?php include_once 'includes/footer.php'; ?>
 
 	<script src="assets/js/app.js"></script>
 </body>

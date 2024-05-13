@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if ( ! isset($_SESSION["current_user"]) ) {
+	header('Location: index.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,26 +15,7 @@
 </head>
 <body>
 
-	<header>
-		<a href="">
-			<img src="" alt="">
-		</a>
-
-		<menu>
-			<li>
-				<a href="">Articles</a>
-			</li>
-			<li>
-				<a href="">Catégories</a>
-			</li>
-			<li>
-				<a href="">Utilisateurs</a>
-			</li>
-			<li>
-				<a href="">Se déconnecter</a>
-			</li>
-		</menu>
-	</header>
+	<?php include_once 'includes/header.php'; ?>
 
 	<main>
 		<header>
@@ -132,6 +121,8 @@
 			<a href="">Créer un article</a>
 		</aside>
 	</main>
+
+	<?php include_once 'includes/footer.php'; ?>
 
 </body>
 </html>

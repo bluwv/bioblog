@@ -1,3 +1,5 @@
+<?php require_once '../config/database.php'; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,31 +9,7 @@
 </head>
 <body>
 
-	<header>
-		<a href="">
-			<img src="" alt="">
-		</a>
-
-		<menu>
-			<li>
-				<a href="">Catégorie 1</a>
-			</li>
-			<li>
-				<a href="">Catégorie 2</a>
-			</li>
-			<li>
-				<a href="">Catégorie 3</a>
-			</li>
-			<li>
-				<a href="">Catégorie 4</a>
-			</li>
-			<li>
-				<a href="">Catégorie 5</a>
-			</li>
-		</menu>
-
-		<img src="" alt="">
-	</header>
+	<?php include_once 'includes/header.php'; ?>
 
 	<main>
 		<section>
@@ -74,6 +52,8 @@
 			</div>
 		</aside>
 	</main>
+
+	<?php include_once 'includes/footer.php'; ?>
 
 </body>
 </html>
