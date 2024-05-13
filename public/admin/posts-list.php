@@ -1,9 +1,21 @@
 <?php
 session_start();
 
+require_once '../../config/database.php';
+
 if ( ! isset($_SESSION["current_user"]) ) {
 	header('Location: index.php');
 }
+
+$query = "SELECT p.id, p.title, p.status, p.created_at, u.username
+FROM posts p
+LEFT JOIN users u ON p.user_id = u.id";
+
+$statement = $pdo->prepare( $query );
+$statement->execute();
+$posts = $statement->fetchAll();
+
+$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -24,84 +36,24 @@ if ( ! isset($_SESSION["current_user"]) ) {
 
 		<section>
 			<table>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Titre de l’article</a>
-						</h3>
-						<a href="">Voir l’article</a>
-						<a href="">Modifier</a>
-						<button>Supprimer</button>
-					</td>
-					<td>Auteur</td>
-					<td>Publié</td>
-					<td>08/04/2024</td>
-				</tr>
+				<?php foreach ( $posts as $post ) :
+					$status = ($post['status']) ? "Publié" : "Brouillon";
+					$created_at = date("d/m/Y", strtotime($post['created_at']));
+					?>
+					<tr class="post-id-<?php echo $post['id']; ?>">
+						<td>
+							<h3>
+								<a href="posts-edit.php?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?></a>
+							</h3>
+							<!-- <a href="">Voir l’article</a>
+							<a href="">Modifier</a>
+							<button>Supprimer</button> -->
+						</td>
+						<td><?php echo $post['username']; ?></td>
+						<td><?php echo $status; ?></td>
+						<td><?php echo $created_at; ?></td>
+					</tr>
+				<?php endforeach; ?>
 			</table>
 
 			<ol>

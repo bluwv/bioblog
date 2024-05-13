@@ -1,9 +1,20 @@
 <?php
 session_start();
 
+require '../../config/database.php';
+
 if ( ! isset($_SESSION["current_user"]) ) {
 	header('Location: index.php');
 }
+
+$query = "SELECT c.id, c.name
+FROM categories c";
+
+$statement = $pdo->prepare( $query );
+$statement->execute();
+$categories = $statement->fetchAll();
+
+$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -24,60 +35,15 @@ if ( ! isset($_SESSION["current_user"]) ) {
 
 		<section>
 			<table>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3>
-							<a href="">Nom de la catégorie</a>
-						</h3>
-						<button>Modifier</button>
-						<button>Supprimer</button>
-					</td>
-				</tr>
+				<?php foreach ($categories as $categorie) : ?>
+					<tr class="categorie-id-<?php echo $categorie['id']; ?>">
+						<td>
+							<h3><?php echo $categorie['name']; ?></h3>
+							<button>Modifier</button>
+							<button>Supprimer</button>
+						</td>
+					</tr>
+				<?php endforeach; ?>
 			</table>
 		</section>
 

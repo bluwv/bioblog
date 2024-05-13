@@ -23,7 +23,9 @@ function limit_text($text, $limit) {
 $num_posts = 6;
 
 // Récupère le nombre total de posts présent dans la db
-$query = 'SELECT count(id) as n FROM posts';
+$query = "SELECT count(id) as n
+FROM posts";
+
 $statement = $pdo->prepare( $query );
 $statement->execute();
 $total_posts = $statement->fetch(); // $total_posts['n']
@@ -42,10 +44,19 @@ if ($p == 0 || $p > $pagination) {
 
 // Utile pour la pagniation
 // ! bien lui retirer 1 unité pour commencer à 0 (array start at 1 :D)
-$offset = ($num_posts * $p);
+// FIXME: Check $p == 1 everywhere
+if ($p == 1) {
+	$offset = 1;
+} else {
+	$offset = ($num_posts * $p);
+}
 
 // Récupère tous les articles/posts avec une pagination déjà en place et je positionne mon offset à 0 (en retirant 1 de base)
-$query = 'SELECT * FROM posts LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
+$query = 'SELECT *
+FROM posts p
+LEFT JOIN categories_posts cp ON p.id = cp.post_id
+LEFT JOIN categories c ON cp.categorie_id = c.id
+LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
 $statement = $pdo->prepare( $query );
 $statement->execute();
 $posts = $statement->fetchAll();
@@ -69,14 +80,12 @@ $pdo = null;
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
-		<form action="GET">
+		<form action="" method="GET">
 			<label for="cat-filter">Filtrer les catégories</label>
 			<select id="cat-filter" name="cat-filter">
-				<option value="cat-1">Catégorie 1</option>
-				<option value="cat-2">Catégorie 2</option>
-				<option value="cat-3">Catégorie 3</option>
-				<option value="cat-4">Catégorie 4</option>
-				<option value="cat-5">Catégorie 5</option>
+				<?php foreach ($categories as $categorie) : ?>
+					<option value="cat-<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
+				<?php endforeach; ?>
 			</select>
 
 			<button>Filtrer</button>
@@ -86,7 +95,7 @@ $pdo = null;
 			<?php foreach ( $posts as $post ) : ?>
 				<?php if ( $post["status"] == 1 ) : // Si == 1 alors le post est publié ?>
 					<article id="post-<?php echo $post["id"]; ?>">
-						<a href="single.php">
+						<a href="single.php?id=<?php echo $post["id"]; ?>">
 							<img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt="">
 						</a>
 
@@ -97,9 +106,9 @@ $pdo = null;
 						</div>
 
 						<h2>
-							<a href="single.php"><?php echo $post["title"]; ?></a>
+							<a href="single.php?id=<?php echo $post["id"]; ?>"><?php echo $post["title"]; ?></a>
 						</h2>
-						<p><?php echo limit_text($post["content"], 20); ?></p>
+						<p><?php echo (! empty($post["content"])) ? limit_text($post["content"], 20) : ''; ?></p>
 					</article>
 				<?php endif; ?>
 			<?php endforeach; ?>

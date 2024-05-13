@@ -1,23 +1,28 @@
+<?php
+
+require '../config/database.php';
+
+$query = "SELECT c.id, c.name
+FROM categories c";
+
+$statement = $pdo->prepare( $query );
+$statement->execute();
+$categories = $statement->fetchAll();
+
+$pdo = null;
+
+?>
+
 <header>
 	<a href="">
 		<img src="" alt="">
 	</a>
 
 	<menu>
-		<li>
-			<a href="">Catégorie 1</a>
-		</li>
-		<li>
-			<a href="">Catégorie 2</a>
-		</li>
-		<li>
-			<a href="">Catégorie 3</a>
-		</li>
-		<li>
-			<a href="">Catégorie 4</a>
-		</li>
-		<li>
-			<a href="">Catégorie 5</a>
-		</li>
+		<?php foreach ($categories as $categorie) : ?>
+			<li>
+				<a href="?categorie=<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></a>
+			</li>
+		<?php endforeach; ?>
 	</menu>
 </header>

@@ -1,4 +1,21 @@
-<?php require_once '../config/database.php'; ?>
+<?php
+
+require_once '../config/database.php';
+
+// TODO: Check que le id est existant dans la base de donnée
+
+$post_id = $_GET['id'];
+
+$query = "SELECT title, content, thumbnail, created_at, username
+FROM posts p
+LEFT JOIN users u ON p.user_id = u.id
+WHERE p.id = :post_id";
+$statement = $pdo->prepare( $query );
+$statement->bindValue( ':post_id', $post_id );
+$statement->execute();
+$post = $statement->fetch();
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,20 +30,20 @@
 
 	<main>
 		<section>
-			<h1>Titre de l'article</h1>
-			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis nesciunt rem, similique error delectus asperiores amet? Culpa, error possimus delectus, nobis, iste nesciunt in veritatis aut deserunt consequatur odio facere voluptatibus reiciendis eos est. Harum repudiandae eius molestiae non itaque ad rerum voluptate est modi tempora cum consequatur quos ab ducimus in, amet rem officia velit totam? Exercitationem a, tempore odit ex aperiam neque quas in officia atque pariatur earum est ducimus laudantium consequatur alias vitae ipsum qui nobis quo beatae deleniti nam corporis obcaecati eius. Ipsum illo adipisci quis facilis doloremque ab. Doloribus, quidem corrupti quas animi natus dolor nemo veniam aut ullam nulla obcaecati error saepe quae et molestiae laudantium praesentium cupiditate deleniti esse. Suscipit quis explicabo tempore molestiae doloremque unde repudiandae nam expedita assumenda odit? Odio eaque necessitatibus eveniet est fuga cupiditate, eius temporibus. Dolor iste quas asperiores quos laboriosam mollitia nostrum ullam doloribus quod ducimus, explicabo labore in, animi, iusto saepe nemo cumque aliquam vitae nisi rerum voluptas nam. Facere architecto provident eos. Sapiente iure impedit neque quas maiores quae beatae eum optio voluptates tenetur assumenda rerum provident error architecto reprehenderit molestiae totam ut dolore est, soluta omnis earum consequatur. Dolorem eveniet ducimus nulla. Quisquam, dicta.</p>
-			<img src="" alt="">
-			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis nesciunt rem, similique error delectus asperiores amet? Culpa, error possimus delectus, nobis, iste nesciunt in veritatis aut deserunt consequatur odio facere voluptatibus reiciendis eos est. Harum repudiandae eius molestiae non itaque ad rerum voluptate est modi tempora cum consequatur quos ab ducimus in, amet rem officia velit totam? Exercitationem a, tempore odit ex aperiam neque quas in officia atque pariatur earum est ducimus laudantium consequatur alias vitae ipsum qui nobis quo beatae deleniti nam corporis obcaecati eius. Ipsum illo adipisci quis facilis doloremque ab. Doloribus, quidem corrupti quas animi natus dolor nemo veniam aut ullam nulla obcaecati error saepe quae et molestiae laudantium praesentium cupiditate deleniti esse. Suscipit quis explicabo tempore molestiae doloremque unde repudiandae nam expedita assumenda odit? Odio eaque necessitatibus eveniet est fuga cupiditate, eius temporibus. Dolor iste quas asperiores quos laboriosam mollitia nostrum ullam doloribus quod ducimus, explicabo labore in, animi, iusto saepe nemo cumque aliquam vitae nisi rerum voluptas nam. Facere architecto provident eos. Sapiente iure impedit neque quas maiores quae beatae eum optio voluptates tenetur assumenda rerum provident error architecto reprehenderit molestiae totam ut dolore est, soluta omnis earum consequatur. Dolorem eveniet ducimus nulla. Quisquam, dicta.</p>
+			<!-- <img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt=""> -->
+			<h1><?php echo $post['title']; ?></h1>
+			<?php echo $post['content']; ?>
 		</section>
 
 		<aside>
 			<div>
 				<ul>
 					<li>
-						<p>Publié le: <span>15/04/2024</span></p>
+						<?php $created_at = date("d/m/Y", strtotime($post['created_at'])); ?>
+						<p>Publié le: <span><?php echo $created_at; ?></span></p>
 					</li>
 					<li>
-						<p>Auteur : <span>Nom de l'auteur</span></p>
+						<p>Auteur : <span><?php echo $post['username']; ?></span></p>
 					</li>
 				</ul>
 			</div>
