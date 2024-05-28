@@ -13,7 +13,7 @@ $pdo = null;
 
 ?>
 
-<header>
+<header class="site-header">
 	<a href="">
 		<img src="" alt="">
 	</a>

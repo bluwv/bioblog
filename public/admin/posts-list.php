@@ -15,7 +15,7 @@ $statement = $pdo->prepare( $query );
 $statement->execute();
 $posts = $statement->fetchAll();
 
-$pdo = null;
+// $pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -24,17 +24,19 @@ $pdo = null;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
+	<link rel="stylesheet" href="../assets/css/reset.css">
+	<link rel="stylesheet" href="../assets/css/app.css">
 </head>
-<body>
 
+<body class="admin post --list">
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
-		<header>
+		<section class="admin-header">
 			<h1>Articles</h1>
-		</header>
+		</section>
 
-		<section>
+		<section class="admin-content">
 			<table>
 				<?php foreach ( $posts as $post ) :
 					$status = ($post['status']) ? "Publié" : "Brouillon";
@@ -45,9 +47,11 @@ $pdo = null;
 							<h3>
 								<a href="posts-edit.php?id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?></a>
 							</h3>
-							<!-- <a href="">Voir l’article</a>
-							<a href="">Modifier</a>
-							<button>Supprimer</button> -->
+							<div>
+								<a class="link-small link --publish" href="../single.php?id=<?php echo $post['id']; ?>">Voir l’article</a>
+								<a class="link-small link --update" href="posts-edit.php?id=<?php echo $post['id']; ?>">Modifier</a>
+								<button class="link-small link --delete">Supprimer</button>
+							</div>
 						</td>
 						<td><?php echo $post['username']; ?></td>
 						<td><?php echo $status; ?></td>
@@ -56,8 +60,8 @@ $pdo = null;
 				<?php endforeach; ?>
 			</table>
 
-			<ol>
-				<li>
+			<ol class="pagination">
+				<li class="active">
 					<a href="">1</a>
 				</li>
 				<li>
@@ -70,11 +74,11 @@ $pdo = null;
 		</section>
 
 		<aside>
-			<a href="">Créer un article</a>
+			<a class="button-primary button-small button" href="posts-edit.php">Créer un article</a>
 		</aside>
 	</main>
 
-	<?php include_once 'includes/footer.php'; ?>
+	<?php // include_once 'includes/footer.php'; ?>
 
 </body>
 </html>

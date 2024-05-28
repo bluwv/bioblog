@@ -1,23 +1,20 @@
-<header>
+<header class="site-header">
 	<a href="">
 		<img src="" alt="">
 	</a>
 
 	<menu>
 		<li>
-			<a href="">Catégorie 1</a>
+			<a href="posts-list.php">Articles</a>
 		</li>
 		<li>
-			<a href="">Catégorie 2</a>
+			<a href="categories.php">Catégories</a>
 		</li>
 		<li>
-			<a href="">Catégorie 3</a>
+			<a href="#">Utilisateurs</a>
 		</li>
 		<li>
-			<a href="">Catégorie 4</a>
-		</li>
-		<li>
-			<a href="">Catégorie 5</a>
+			<a href="logout.php">Se déconnecter</a>
 		</li>
 	</menu>
 </header>

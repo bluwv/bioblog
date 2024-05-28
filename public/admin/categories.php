@@ -14,7 +14,7 @@ $statement = $pdo->prepare( $query );
 $statement->execute();
 $categories = $statement->fetchAll();
 
-$pdo = null;
+// $pdo = null;
 ?>
 
 <!DOCTYPE html>
