@@ -226,8 +226,42 @@ textarea:focus {
 
 .--edit {}
 
-.modal:not(.active) {
-	display: none;
+/* MODAL */
+
+body {
+	position: relative;
+	background-color: rgba(0, 0, 0, .8);
+
+	&.has-modal-active {
+		&::before {
+			content: "";
+			display: block;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, .4);
+			backdrop-filter: blur(2px);
+		}
+	}
+
+	.modal {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 4rem;
+		background-color: white;
+		box-shadow: 0 0 1.6rem 0.4rem rgba(0, 0, 0, 0.1);
+		border-radius: 4px;
+	}
+}
+
+.modal {
+	&:not(.active) {
+		display: none;
+	}
 }
 
 /* LOGIN */
@@ -236,45 +270,45 @@ textarea:focus {
 	width: 100vw;
 	height: 100vh;
 	background-color: var(--color-green);
-}
 
-.login main {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100vw;
-	height: 100vh;
-}
+	main {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100vw;
+		height: 100vh;
+	}
 
-.login-wrapper {
-	margin: 2rem;
-	width: 100%;
-	max-width: 44rem;
-}
+	.login-wrapper {
+		margin: 2rem;
+		width: 100%;
+		max-width: 44rem;
+	}
 
-.login .logo {
-	display: inline-block;
-}
+	.logo {
+		display: inline-block;
+	}
 
-.login form {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 2rem 3.2rem 4rem;
-	background: white;
-	border-radius: .8rem;
-}
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2rem 3.2rem 4rem;
+		background: white;
+		border-radius: .8rem;
+	}
 
-.login .button {
-	margin-top: 3.2rem;
-}
+	.button {
+		margin-top: 3.2rem;
+	}
 
-.login .link {
-	margin-top: 1.6rem;
-}
+	.link {
+		margin-top: 1.6rem;
 
-.login .link.--reset-password {
-	margin: 2rem;
+		&.--reset-password {
+			margin: 2rem;
+		}
+	}
 }
 
 /* BUTTON */

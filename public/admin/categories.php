@@ -58,22 +58,22 @@ $categories = $statement->fetchAll();
 		</section>
 
 		<aside>
-			<form name="publish" action="data/category_add.php" method="POST">
+			<form action="data/category_add.php" method="POST">
 				<label for="category_name">Nom</label>
 				<input id="category_name" type="text" name="category_name" placeholder="Nom">
-				<button class="button-primary button-small button">Créer la catégorie</button>
+				<button type="submit" class="button-primary button-small button">Créer la catégorie</button>
 			</form>
 		</aside>
 
 	</main>
 
 	<aside class="modal">
-		<form action="data/category_delete.php" method>
+		<form action="data/category_delete.php" method="POST">
 			<input type="hidden" name="category_id" value="">
 			<h2>Êtes vous sur de vouloir supprimer ?</h2>
 			<p>Attention, cette action est définitive et irréversible.</p>
-			<button class="button-cancel button">Annuler</button>
-			<button class="button-delete button">Supprimer</button>
+			<button type="button" class="button-primary button-cancel button" data-click="close">Annuler</button>
+			<button type="submit" class="button-primary button-delete button" data-click="drop">Supprimer</button>
 		</form>
 	</aside>
 
