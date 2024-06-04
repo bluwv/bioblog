@@ -38,28 +38,28 @@ $categories = $statement->fetchAll();
 
 		<section class="admin-content">
 			<table class="categories-list">
-				<?php foreach ($categories as $categorie) : ?>
-					<tbody>
-					<tr class="categorie-item categorie-id-<?php echo $categorie['id']; ?>">
-						<td>
-							<form action="data/category_update.php" method="POST">
-								<input type="hidden" name="category_id" value="<?php echo $categorie['id']; ?>">
-								<input type="text" name="category_name" value="<?php echo $categorie['name']; ?>">
-								<div>
-									<button type="submit" data-click="update">Modifier</button>
-									<button type="button" data-click="delete">Supprimer</button>
-								</div>
-							</form>
-						</td>
-					</tr>
-					</tbody>
-				<?php endforeach; ?>
+				<tbody>
+					<?php foreach ($categories as $categorie) : ?>
+						<tr class="categorie-item categorie-id-<?php echo $categorie['id']; ?>">
+							<td>
+								<form action="data/category_update.php" method="POST">
+									<input type="hidden" name="category_id" value="<?php echo $categorie['id']; ?>">
+									<input type="text" name="category_name" value="<?php echo $categorie['name']; ?>">
+									<div>
+										<button type="submit" data-click="update">Modifier</button>
+										<button type="button" data-click="delete">Supprimer</button>
+									</div>
+								</form>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
 			</table>
 		</section>
 
-		<aside>
+		<aside class="admin-sidebar">
 			<form action="data/category_add.php" method="POST">
-				<label for="category_name">Nom</label>
+				<label for="category_name">Ajouter une catégorie</label>
 				<input id="category_name" type="text" name="category_name" placeholder="Nom">
 				<button type="submit" class="button-primary button-small button">Créer la catégorie</button>
 			</form>

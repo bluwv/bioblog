@@ -2,6 +2,7 @@
 	--color-blue: #44A5FF;
 	--color-red: #D32C2E;
 	--color-green: #D9EDBF;
+	--color-blue-light: #CFDCE8;
 	--font-primary: 'Helvetica Neue', 'Helvetica', sans-serif;
 }
 
@@ -60,6 +61,37 @@ main img {
 	gap: 0;
 	grid-template-columns: 30rem 1fr;
 	background-color: rgba(33, 30, 30, .1);
+
+	&.categorie {
+		main {
+			display: grid;
+			gap: 0;
+			grid-template-columns: 2fr 1fr;
+			grid-template-rows: auto 1fr;
+			grid-template-areas:
+				"header header"
+				"content sidebar"
+			;
+
+			.admin-header {
+				grid-area: header;
+			}
+
+			.admin-content {
+				grid-area: content;
+
+				[type="text"] {
+					padding: .6rem 1.2rem .7rem;
+					font-size: 1.6rem;
+					line-height: 2.4rem;
+				}
+			}
+
+			.admin-sidebar {
+				grid-area: sidebar;
+			}
+		}
+	}
 }
 
 .admin-header {
@@ -71,15 +103,35 @@ main img {
 
 /* ADMIN CONTENT */
 
+.admin-sidebar {
+	padding-right: 6rem;
+
+	form {
+		.button {
+			margin-top: 2.4rem;
+		}
+	}
+}
+
 .admin-content {
 	padding: 6rem 8rem;
 }
 
 .admin-content table {
 	overflow: hidden;
+	display: block;
 	width: 100%;
-	border: 1px solid #CFDCE8;
+	border: 1px solid var(--color-blue-light);
 	border-radius: 4px;
+
+	tbody {
+		display: block;
+		width: 100%;
+	}
+
+	tr {
+		width: 100%;
+	}
 }
 
 .admin-content table a {
@@ -124,11 +176,13 @@ main img {
 }
 
 .admin-content tr:not(:first-child) {
-	border-top: 1px solid #CFDCE8;
+	border-top: 1px solid var(--color-blue-light);
 }
 
-.admin-content tr:nth-child(2n) {
-	background-color: rgba(255, 255, 255, .6);
+.admin.post {
+	.admin-content tr:nth-child(2n) {
+		background-color: rgba(255, 255, 255, .6);
+	}
 }
 
 .admin-content form {
@@ -156,7 +210,7 @@ main img {
 	flex-direction: column;
 	padding: 1.6rem 2.4rem;
 	background: white;
-	border: 1px solid #CFDCE8;
+	border: 1px solid var(--color-blue-light);
 	border-radius: .4rem;
 }
 
@@ -179,7 +233,7 @@ main img {
 	width: 1.6rem;
 	height: 1.6rem;
 	background-color: white;
-	border: 1px solid #CFDCE8;
+	border: 1px solid var(--color-blue-light);
 	border-radius: .4rem;
 }
 
@@ -207,7 +261,7 @@ textarea {
 	width: 100%;
 	max-width: 56rem;
 	background-color: white;
-	border: 1px solid #CFDCE8;
+	border: 1px solid var(--color-blue-light);
 	border-radius: .4rem;
 }
 
@@ -337,7 +391,9 @@ body {
 	border-radius: 5.2rem;
 }
 
-.button-small {}
+.button-small {
+	padding: 1.2rem 2rem 1rem;
+}
 
 .link {
 	/* all: unset; ! Ceci efface vraiment tous les styles*/
@@ -372,7 +428,7 @@ body {
 	text-decoration: none;
 	color: currentColor;
 	background-color: white;
-	border: 1px solid #CFDCE8;
+	border: 1px solid var(--color-blue-light);
 	border-radius: 2px;
 }
 
@@ -384,8 +440,11 @@ body {
 
 /* CATEGORIES */
 
-.categories-list tr {
-	grid-template-columns: 1fr;
+.categories-list {
+
+	tr {
+		grid-template-columns: 1fr;
+	}
 }
 
 .categorie-item form {
