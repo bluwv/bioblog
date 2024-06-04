@@ -7,12 +7,13 @@ if ( ! isset($_SESSION["current_user"]) ) {
 	header('Location: index.php');
 }
 
-$post_id = $_GET['id'] ?? '';
+$post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
 
 if ( $_POST ) {
 
 	$post = $_POST;
 
+	// INSERT INTO
 	if ( isset( $post['publish'] ) ) {
 		$query = "INSERT INTO posts (title, content, status, user_id, created_at, updated_at)
 		VALUE (:title, :content, :status, :user_id, NOW(), NOW())";
@@ -25,6 +26,7 @@ if ( $_POST ) {
 		$statement->execute();
 	}
 
+	// UPDATE
 	if ( isset( $post['update'] ) && ! empty( $post_id ) ) {
 		$query = "UPDATE posts p
 		SET p.title = :title, p.content = :content, p.status = :status, p.updated_at = NOW()
@@ -37,6 +39,7 @@ if ( $_POST ) {
 		$statement->execute();
 	}
 
+	// DELETE
 	if ( isset( $post['delete'] ) && ! empty( $post_id ) ) {
 		$query="DELETE FROM posts
 		WHERE id = " . $post_id;
@@ -53,16 +56,16 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	FROM posts p
 	LEFT JOIN categories_posts cp ON cp.post_id = p.id
 	LEFT JOIN categories c ON c.id = cp.categorie_id
-	WHERE p.id = " . $_GET['id'];
+	WHERE p.id = " . $post_id;
 
 	$statement = $pdo->prepare( $query );
 	$statement->execute();
 	$post = $statement->fetch();
 }
 
-// var_dump($post);
-
 ?>
+
+<img src="images/monsuperdossier/<?php echo $pdo['nomdemacolonne']; ?>" alt="">
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -75,6 +78,7 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 </head>
 
 <body class="admin post --edit">
+
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
@@ -97,10 +101,10 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 
 					<div class="form-row --button">
 						<?php if ( isset( $post_id ) && ! empty ( $post_id ) ) : ?>
-							<button class="button-primary button-small button" name="update">Modifier</button>
-							<button class="link-delete link" name="delete">Supprimer</button>
+							<button type="submit" class="button-primary button-small button" name="update">Modifier</button>
+							<button type="submit" class="link-delete link" name="delete">Supprimer</button>
 						<?php else : ?>
-							<button class="button-primary button-small button" name="publish">Publier</button>
+							<button type="submit" class="button-primary button-small button" name="publish">Publier</button>
 						<?php endif; ?>
 					</div>
 				</div>

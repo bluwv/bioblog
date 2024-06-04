@@ -2,6 +2,7 @@
 	--color-blue: #44A5FF;
 	--color-red: #D32C2E;
 	--color-green: #D9EDBF;
+	--font-primary: 'Helvetica Neue', 'Helvetica', sans-serif;
 }
 
 ::selection {
@@ -23,6 +24,7 @@ html {
 }
 
 body {
+	font-family: var(--font-primary);
 	font-size: 1.6rem;
 }
 
@@ -224,7 +226,7 @@ textarea:focus {
 
 .--edit {}
 
-.modal {
+.modal:not(.active) {
 	display: none;
 }
 
@@ -344,4 +346,14 @@ textarea:focus {
 	color: var(--color-blue);
 	border-color: var(--color-blue);
 	text-decoration: underline;
+}
+
+/* CATEGORIES */
+
+.categories-list tr {
+	grid-template-columns: 1fr;
+}
+
+.categorie-item form {
+	display: block;
 }
