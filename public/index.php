@@ -75,40 +75,47 @@ $pdo = null;
 	<link rel="stylesheet" href="assets/css/reset.css">
 	<link rel="stylesheet" href="assets/css/app.css">
 </head>
-<body>
+
+<body class="site">
 
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
 		<form action="" method="GET">
-			<label for="cat-filter">Filtrer les catégories</label>
-			<select id="cat-filter" name="cat-filter">
-				<?php foreach ($categories as $categorie) : ?>
-					<option value="cat-<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
-				<?php endforeach; ?>
-			</select>
+			<div class="form-row form-row--select">
+				<label class="sr-only" for="cat-filter">Filtrer les catégories</label>
+				<select id="cat-filter" name="cat-filter">
+					<?php foreach ($categories as $categorie) : ?>
+						<option value="cat-<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
 
-			<button>Filtrer</button>
+			<button type="submit">Filtrer</button>
 		</form>
 
-		<section>
+		<section class="posts-list">
 			<?php foreach ( $posts as $post ) : ?>
 				<?php if ( $post["status"] == 1 ) : // Si == 1 alors le post est publié ?>
-					<article id="post-<?php echo $post["id"]; ?>">
-						<a href="single.php?id=<?php echo $post["id"]; ?>">
-							<img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt="">
-						</a>
+					<article id="post-<?php echo $post["id"]; ?>" class="post-card">
+						<picture class="post-card-image">
+							<a href="single.php?id=<?php echo $post["id"]; ?>">
+								<img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt="">
+							</a>
+						</picture>
 
-						<div>
-							<a href="">Catégorie 1</a>
-							<a href="">Catégorie 2</a>
-							<a href="">Catégorie 3</a>
+						<div class="post-card-content">
+							<div class="categories-list">
+								<a href="">Catégorie 1</a>
+								<a href="">Catégorie 2</a>
+								<a href="">Catégorie 3</a>
+							</div>
+
+							<h2 class="title">
+								<a href="single.php?id=<?php echo $post["id"]; ?>"><?php echo $post["title"]; ?></a>
+							</h2>
+							<p><?php echo (! empty($post["content"])) ? limit_text($post["content"], 20) : ''; ?></p>
 						</div>
-
-						<h2>
-							<a href="single.php?id=<?php echo $post["id"]; ?>"><?php echo $post["title"]; ?></a>
-						</h2>
-						<p><?php echo (! empty($post["content"])) ? limit_text($post["content"], 20) : ''; ?></p>
 					</article>
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -127,7 +134,7 @@ $pdo = null;
 		<?php endif; ?>
 	</main>
 
-	<?php include_once 'includes/footer.php'; ?>
+	<?php // include_once 'includes/footer.php'; ?>
 
 	<script src="assets/js/app.js"></script>
 </body>
