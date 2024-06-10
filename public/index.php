@@ -84,9 +84,9 @@ $pdo = null;
 		<form action="" method="GET">
 			<div class="form-row form-row--select">
 				<label class="sr-only" for="cat-filter">Filtrer les catégories</label>
-				<select id="cat-filter" name="cat-filter">
+				<select id="cat-filter" name="id">
 					<?php foreach ($categories as $categorie) : ?>
-						<option value="cat-<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
+						<option value="<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>

@@ -1,11 +1,7 @@
 <?php
-session_start();
 
-require '../../config/database.php';
-
-if ( ! isset($_SESSION["current_user"]) ) {
-	header('Location: index.php');
-}
+require_once 'includes/has_session.php';
+require_once '../../config/database.php';
 
 $query = "SELECT c.id, c.name
 FROM categories c";

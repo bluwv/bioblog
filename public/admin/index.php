@@ -1,6 +1,6 @@
 <?php
-session_start();
 
+session_start();
 require_once '../../config/database.php';
 
 function sanitize_input($input) {
@@ -40,6 +40,7 @@ if ( $_POST ) {
 				$_SESSION["current_user"]['id'] = $users['id'];
 				$_SESSION["current_user"]['name'] = $users['username'];
 				$_SESSION["current_user"]['role'] = 'administrator';
+				$_SESSION['last_activity'] = time();
 
 				header('Location: posts-list.php');
 			// } else {

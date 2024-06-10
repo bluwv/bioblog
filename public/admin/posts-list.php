@@ -1,11 +1,7 @@
 <?php
-session_start();
 
+require_once 'includes/has_session.php';
 require_once '../../config/database.php';
-
-if ( ! isset($_SESSION["current_user"]) ) {
-	header('Location: index.php');
-}
 
 $query = "SELECT p.id, p.title, p.status, p.created_at, u.username
 FROM posts p

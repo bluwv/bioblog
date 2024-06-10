@@ -1,16 +1,14 @@
 <?php
-session_start();
 
+require_once 'includes/has_session.php';
 require_once '../../config/database.php';
-
-if ( ! isset($_SESSION["current_user"]) ) {
-	header('Location: index.php');
-}
 
 $post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
 
 if ( $_POST ) {
 	$post = $_POST;
+
+	$post_status = (isset($post['status']) && $post['status'] == 'on') ? 1 : 0;
 
 	// INSERT INTO
 	if ( isset( $post['publish'] ) ) {
@@ -20,9 +18,23 @@ if ( $_POST ) {
 		$statement = $pdo->prepare( $query );
 		$statement->bindValue( ':title', $post['title'] );
 		$statement->bindValue( ':content', $post['content'] );
-		$statement->bindValue( ':status', $post['status'] );
+		$statement->bindValue( ':status', $post_status );
 		$statement->bindValue( ':user_id', $_SESSION['current_user']['id'] );
 		$statement->execute();
+
+		$new_id = $pdo->lastInsertId();
+
+		// foreach ($post['categorie'] as $categorie_id) {
+			$query = "INSERT INTO categories_posts (post_id, categorie_id)
+			VALUE (:post_id, :categorie_id)";
+
+			$statement = $pdo->prepare( $query );
+			$statement->bindValue( ':post_id', $new_id );
+			$statement->bindValue( ':categorie_id', $post['categorie'] );
+			$statement->execute();
+		// }
+
+		header('Location: posts-edit.php?id=' . $new_id);
 	}
 
 	// UPDATE
@@ -34,7 +46,15 @@ if ( $_POST ) {
 		$statement = $pdo->prepare( $query );
 		$statement->bindValue( ':title', $post['title'] );
 		$statement->bindValue( ':content', $post['content'] );
-		$statement->bindValue( ':status', $post['status'] );
+		$statement->bindValue( ':status', $post_status );
+		$statement->execute();
+
+		$query = "UPDATE categories_posts
+		SET categorie_id = :categorie_id
+		WHERE post_id = " . $post_id;
+
+		$statement = $pdo->prepare( $query );
+		$statement->bindValue( ':categorie_id', $post['categorie'] );
 		$statement->execute();
 	}
 
@@ -61,6 +81,14 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	$statement->execute();
 	$post = $statement->fetch();
 }
+
+$query = "SELECT c.id, c.name
+FROM categories c
+LEFT JOIN categories_posts cp ON cp.post_id = c.id";
+
+$statement = $pdo->prepare( $query );
+$statement->execute();
+$categories = $statement->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -70,13 +98,6 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
 	<link rel="stylesheet" href="../assets/css/app.css">
-
-	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-	<script>
-	tinymce.init({
-		selector: '[name="content"]'
-	});
-	</script>
 </head>
 
 <body class="admin post --edit">
@@ -92,12 +113,12 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 			<form action="" method="POST">
 				<div>
 					<div class="form-row">
-						<label for="title">Titre de l’article</label>
+						<label class="title" for="title">Titre de l’article</label>
 						<input id="title" type="text" name="title" placeholder="Titre de l'article" value="<?php echo (isset($post['title'])) ? $post['title'] : ''; ?>">
 					</div>
 
 					<div class="form-row">
-						<label for="content">Contenu de l’article</label>
+						<label class="title" for="content">Contenu de l’article</label>
 						<textarea id="content" name="content" placeholder="Contenu de l’article"><?php echo $post['content'] ?? ''; ?></textarea>
 					</div>
 
@@ -112,54 +133,52 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 				</div>
 
 				<div>
-					<div class="form-row">
-						<label for="status">Statut de l’article</label>
-						<select name="status" id="status">
+					<div class="form-row --checkbox">
+						<h3 class="title">Statut de l’article</h3>
+						<!-- <select name="status" id="status">
 							<option value="0" <?php echo ( isset( $post['status'] ) && $post['status'] == 0 ) ? 'selected' : ''; ?>>Brouillon</option>
 							<option value="1" <?php echo ( isset( $post['status'] ) && $post['status'] == 1 ) ? 'selected' : ''; ?>>Publié</option>
-						</select>
+						</select> -->
+
+						<div>
+							<div>
+								<input id="status" type="checkbox" name="status" <?php echo ( isset( $post['status'] ) && $post['status'] == 1 ) ? 'checked' : ''; ?>>
+								<label for="status">Publié</label>
+							</div>
+						</div>
 					</div>
 
 					<div class="form-row --checkbox">
-						<!-- <h3>Catégorie de l’article</h3> -->
-						<div>
-							<input id="categorie-2" type="radio" name="categorie" value="2" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == 2 ) ? 'checked' : ''; ?>>
-							<label for="categorie-2">Astuce</label>
-						</div>
+						<h3 class="title">Catégorie de l’article</h3>
 
 						<div>
-							<input id="categorie-5" type="radio" name="categorie" value="5" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == 5 ) ? 'checked' : ''; ?>>
-							<label for="categorie-5">Maquillage</label>
+							<?php foreach ($categories as $categorie) : ?>
+								<div>
+									<input id="categorie-<?php echo $categorie['id']; ?>" type="radio" name="categorie" value="<?php echo $categorie['id']; ?>" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == $categorie['id'] ) ? 'checked' : ''; ?>>
+									<label for="categorie-<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></label>
+								</div>
+							<?php endforeach; ?>
 						</div>
-
-						<div>
-							<input id="categorie-3" type="radio" name="categorie" value="3" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == 3 ) ? 'checked' : ''; ?>>
-							<label for="categorie-3">Nature</label>
-						</div>
-
-						<div>
-							<input id="categorie-4" type="radio" name="categorie" value="4" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == 4 ) ? 'checked' : ''; ?>>
-							<label for="categorie-4">Océan</label>
-						</div>
-
-						<div>
-							<input id="categorie-1" type="radio" name="categorie" value="1" <?php echo ( isset( $post['categorie_id'] ) && $post['categorie_id'] == 1 ) ? 'checked' : ''; ?>>
-							<label for="categorie-1">Recette</label>
-						</div>
-					</div>
-
-					<div class="form-row">
-						<?php if ( isset( $post['thumbnail'] ) && ! empty( $post['thumbnail'] ) ) : ?>
-							<img src="../assets/images/<?php echo $post['thumbnail']; ?>" alt="">
-							<button class="button-primary button-small button">Retirer l’image</button>
-						<?php else : ?>
-							<label for="thumbnail">Image de l’article</label>
-							<input id="thumbnail" type="file" name="thumbnail">
-							<button class="button-primary button-small button">Ajouter une image</button>
-						<?php endif; ?>
 					</div>
 				</div>
 			</form>
+
+			<div class="form-row">
+				<?php if ( isset( $post['thumbnail'] ) && ! empty( $post['thumbnail'] ) ) : ?>
+					<form action="data/file_remove.php" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+						<img src="../uploads/<?php echo $post['thumbnail']; ?>" alt="">
+						<button type="submit" class="button-primary button-small button">Retirer l’image</button>
+					</form>
+				<?php else : ?>
+					<form action="data/file_upload.php" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+						<label for="thumbnail">Image de l’article</label>
+						<input id="thumbnail" type="file" name="fileToUpload">
+						<button type="submit" class="button-primary button-small button">Ajouter une image</button>
+					</form>
+				<?php endif; ?>
+			</div>
 		</section>
 
 	</main>
@@ -174,6 +193,15 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	</aside>
 
 	<?php // include_once 'includes/footer.php'; ?>
-
+	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			tinymce.init({
+				selector: 'textarea',
+				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+			});
+		});
+	</script>
 </body>
 </html>

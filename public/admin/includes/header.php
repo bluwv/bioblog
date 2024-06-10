@@ -1,5 +1,5 @@
 <header class="site-header">
-	<a href="">
+	<a href="../index.php">
 		<img src="../assets/images/logo-bioblog.png" alt="">
 	</a>
 
