@@ -10,7 +10,6 @@ if ( ! isset($_SESSION["current_user"]) ) {
 $post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
 
 if ( $_POST ) {
-
 	$post = $_POST;
 
 	// INSERT INTO
@@ -62,10 +61,7 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	$statement->execute();
 	$post = $statement->fetch();
 }
-
 ?>
-
-<img src="images/monsuperdossier/<?php echo $pdo['nomdemacolonne']; ?>" alt="">
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -73,8 +69,14 @@ if ( isset( $post_id ) && ! empty ( $post_id ) ) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
-	<link rel="stylesheet" href="../assets/css/reset.css">
 	<link rel="stylesheet" href="../assets/css/app.css">
+
+	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+	<script>
+	tinymce.init({
+		selector: '[name="content"]'
+	});
+	</script>
 </head>
 
 <body class="admin post --edit">
