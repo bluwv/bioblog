@@ -6,18 +6,8 @@
  * Faire le bon nombre de lien de pagination (footer ol)
  */
 
+require_once 'includes/functions.php';
 require_once '../config/database.php';
-
-// TODO: Mettre ceci dans un fichier functions.php à part
-function limit_text($text, $limit) {
-	if (str_word_count($text, 0) > $limit) {
-		$words = str_word_count($text, 2);
-		$pos = array_keys($words);
-		$text = substr($text, 0, $pos[$limit]) . '...';
-	}
-
-	return $text;
-}
 
 // Nombre de posts à afficher
 $num_posts = 6;
@@ -42,7 +32,7 @@ if ($p == 0 || $p > $pagination) {
 	exit;
 }
 
-// Utile pour la pagniation
+// Utile pour la pagination
 // ! bien lui retirer 1 unité pour commencer à 0 (array start at 1 :D)
 // FIXME: Check $p == 1 everywhere
 if ($p == 1) {
@@ -52,17 +42,20 @@ if ($p == 1) {
 }
 
 // Récupère tous les articles/posts avec une pagination déjà en place et je positionne mon offset à 0 (en retirant 1 de base)
+$categorie_id = $_GET['categorie'];
+
 $query = 'SELECT *
 FROM posts p
 LEFT JOIN categories_posts cp ON p.id = cp.post_id
 LEFT JOIN categories c ON cp.categorie_id = c.id
-LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
+WHERE c.id = ' . $categorie_id;
+// LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
 $statement = $pdo->prepare( $query );
+// $statement->bindValue();
 $statement->execute();
 $posts = $statement->fetchAll();
 
-// Bien fermer la connexion
-$pdo = null;
+// $pdo = null;
 
 ?>
 
@@ -72,11 +65,10 @@ $pdo = null;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
-	<link rel="stylesheet" href="assets/css/reset.css">
 	<link rel="stylesheet" href="assets/css/app.css">
 </head>
 
-<body class="site">
+<body class="site home">
 
 	<?php include_once 'includes/header.php'; ?>
 
@@ -84,14 +76,16 @@ $pdo = null;
 		<form action="" method="GET">
 			<div class="form-row form-row--select">
 				<label class="sr-only" for="cat-filter">Filtrer les catégories</label>
-				<select id="cat-filter" name="id">
-					<?php foreach ($categories as $categorie) : ?>
-						<option value="<?php echo $categorie['id']; ?>"><?php echo $categorie['name']; ?></option>
+				<select id="cat-filter" name="categorie">
+					<?php foreach ($categories as $categorie) :
+						$selected = ( isset( $_GET['categorie'] ) && $_GET['categorie'] == $categorie['id'] ) ? 'selected' : '';
+						?>
+						<option value="<?php echo $categorie['id']; ?>" <?php echo $selected; ?>><?php echo $categorie['name']; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
 
-			<button type="submit">Filtrer</button>
+			<!-- <button type="submit">Filtrer</button> -->
 		</form>
 
 		<section class="posts-list">
@@ -100,7 +94,7 @@ $pdo = null;
 					<article id="post-<?php echo $post["id"]; ?>" class="post-card">
 						<picture class="post-card-image">
 							<a href="single.php?id=<?php echo $post["id"]; ?>">
-								<img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt="">
+								<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
 							</a>
 						</picture>
 
@@ -136,6 +130,6 @@ $pdo = null;
 
 	<?php // include_once 'includes/footer.php'; ?>
 
-	<script src="assets/js/app.js"></script>
+	<script src="assets/app.js"></script>
 </body>
 </html>

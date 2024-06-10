@@ -6,25 +6,32 @@
 // document.addEventListener('DOMContentLoaded', () => {});
 document.addEventListener('DOMContentLoaded', function() {
 
-	document.querySelectorAll('[data-click="delete"]').forEach( function( button ) {
-		button.addEventListener('click', function( element ) {
+	if ( document.body.classList.contains('categorie') ) {
+		document.querySelectorAll('[data-click="delete"]').forEach( function( button ) {
+			button.addEventListener('click', function( element ) {
 
-			element.preventDefault();
+				element.preventDefault();
 
-			document.querySelector('body').classList.add('has-modal-active');
-			document.querySelector('.modal').classList.add('active');
+				document.querySelector('body').classList.add('has-modal-active');
+				document.querySelector('.modal').classList.add('active');
 
-			let category_id = element.currentTarget.closest('form').querySelector('[type="hidden"]').value;
-			document.querySelector('.modal').querySelector('[type="hidden"]').value = category_id;
+				let category_id = element.currentTarget.closest('form').querySelector('[type="hidden"]').value;
+				document.querySelector('.modal').querySelector('[type="hidden"]').value = category_id;
 
+			});
 		});
-	});
 
-	document.querySelector('[data-click="close"]').addEventListener('click', function( button ) {
-		document.querySelector('body').classList.remove('has-modal-active');
-		button.currentTarget.closest('.modal').classList.remove('active');
-	})
+		document.querySelector('[data-click="close"]').addEventListener('click', function( button ) {
+			document.querySelector('body').classList.remove('has-modal-active');
+			button.currentTarget.closest('.modal').classList.remove('active');
+		})
+	}
 
+	if ( document.body.classList.contains('home') ) {
+		document.querySelector('[name="categorie"]').addEventListener('change', function( select ) {
+			select.target.closest('form').submit();
+		})
+	}
 
 });
 

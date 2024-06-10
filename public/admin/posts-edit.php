@@ -193,6 +193,8 @@ $categories = $statement->fetchAll();
 	</aside>
 
 	<?php // include_once 'includes/footer.php'; ?>
+
+	<script src="../assets/app.js"></script>
 	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
