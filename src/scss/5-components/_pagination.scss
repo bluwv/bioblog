@@ -1,0 +1,27 @@
+/* PAGINATION */
+
+.pagination {
+	display: flex;
+	gap: .8rem;
+	margin-top: 3.2rem;
+}
+
+.pagination li a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 1px;
+	width: 3.2rem;
+	height: 3.2rem;
+	text-decoration: none;
+	color: currentColor;
+	background-color: white;
+	border: 1px solid var(--color-blue-light);
+	border-radius: 2px;
+}
+
+.pagination li.active a {
+	color: var(--color-blue);
+	border-color: var(--color-blue);
+	text-decoration: underline;
+}

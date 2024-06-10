@@ -1,0 +1,38 @@
+.site-header {
+	.site & {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		menu {
+			display: flex;
+			gap: 1.2rem;
+			align-items: center;
+			list-style: none;
+
+			a {
+				text-decoration: none;
+				color: currentColor;
+			}
+		}
+	}
+
+	.admin & {
+		padding: 2rem;
+
+		@media screen and (min-width:801px) {
+			min-height: 100vh;
+			color: white;
+			background-color: #211E1E;
+		}
+
+		menu {
+			list-style-type: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: currentColor;
+		}
+	}
+}

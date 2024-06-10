@@ -1,0 +1,44 @@
+/* BUTTON */
+
+.form-row.--button {
+	display: flex;
+	gap: 4rem;
+	margin-top: 4rem;
+}
+
+.button {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.button-primary {
+	padding: 2rem 6.4rem;
+	font-size: 1.4rem;
+	line-height: 1.4rem;
+	font-weight: 600;
+	letter-spacing: .2rem;
+	text-transform: uppercase;
+	color: white;
+	background-color: #211E1E;
+	border: none;
+	border-radius: 5.2rem;
+}
+
+.button-small {
+	padding: 1.2rem 2rem 1rem;
+}
+
+.link {
+	/* all: unset; ! Ceci efface vraiment tous les styles*/
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	color: currentColor;
+	text-decoration: underline;
+	background: transparent;
+	border: none;
+}
+
+.link-delete {
+	color: var(--color-red);
+}

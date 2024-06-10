@@ -1,0 +1,46 @@
+/* LOGIN */
+
+.login {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--color-green);
+
+	main {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100vw;
+		height: 100vh;
+	}
+
+	.login-wrapper {
+		margin: 2rem;
+		width: 100%;
+		max-width: 44rem;
+	}
+
+	.logo {
+		display: inline-block;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2rem 3.2rem 4rem;
+		background: white;
+		border-radius: .8rem;
+	}
+
+	.button {
+		margin-top: 3.2rem;
+	}
+
+	.link {
+		margin-top: 1.6rem;
+
+		&.--reset-password {
+			margin: 2rem;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+/* CATEGORIES */
+
+.categories-list {
+
+	tr {
+		grid-template-columns: 1fr;
+	}
+}
+
+.categorie-item form {
+	display: block;
+}
