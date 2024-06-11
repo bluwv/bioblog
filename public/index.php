@@ -41,17 +41,33 @@ if ($p == 1) {
 	$offset = ($num_posts * $p);
 }
 
-// Récupère tous les articles/posts avec une pagination déjà en place et je positionne mon offset à 0 (en retirant 1 de base)
-$categorie_id = $_GET['categorie'];
+/**
+ * On récupère tous les articles/posts avec une pagination déjà en place
+ * et je positionne mon offset à 0 (en retirant 1 de base)
+ * Je vérifie également que le filtre n'est pas déjà positionné sur une catégorie spécifique.
+ */
 
-$query = 'SELECT *
-FROM posts p
-LEFT JOIN categories_posts cp ON p.id = cp.post_id
-LEFT JOIN categories c ON cp.categorie_id = c.id
-WHERE c.id = ' . $categorie_id;
-// LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
+$has_categorie_id = $_GET['categorie'] ?? null;
+
+if ( $has_categorie_id ) {
+	$query = 'SELECT *
+	FROM posts p
+	LEFT JOIN categories_posts cp ON p.id = cp.post_id
+	LEFT JOIN categories c ON cp.categorie_id = c.id
+	WHERE c.id = :categorie_id';
+	// . 'LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
+} else {
+	$query = 'SELECT *
+	FROM posts p
+	LEFT JOIN categories_posts cp ON p.id = cp.post_id
+	LEFT JOIN categories c ON cp.categorie_id = c.id
+	LIMIT ' . $num_posts . ' OFFSET ' . ($offset - 1);
+}
+
 $statement = $pdo->prepare( $query );
-// $statement->bindValue();
+if ( $has_categorie_id ) {
+	$statement->bindValue(':categorie_id', $_GET['categorie']);
+}
 $statement->execute();
 $posts = $statement->fetchAll();
 
