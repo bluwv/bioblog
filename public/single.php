@@ -91,7 +91,7 @@ $post = $statement->fetch();
 		</aside>
 	</main>
 
-	<?php include_once 'includes/footer.php'; ?>
+	<?php // include_once 'includes/footer.php'; ?>
 
 	<script src="assets/app.js"></script>
 

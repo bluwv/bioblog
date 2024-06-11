@@ -7,6 +7,8 @@
   --color-blue-light: #CFDCE8;
   --font-primary: "Inter", sans-serif;
   --font-secondary: "Roboto Serif", serif;
+  --padding-container-header: 4rem clamp(2rem, 8vw, 8rem) 0 5vw;
+  --padding-container-body: 4rem clamp(2rem, 8vw, 8rem) 0;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -248,7 +250,8 @@ body.has-modal-active::before {
 .pagination {
   display: flex;
   gap: 0.8rem;
-  margin-top: 3.2rem;
+  margin-top: 4rem;
+  margin-bottom: 6rem;
 }
 
 .pagination li a {
@@ -273,14 +276,26 @@ body.has-modal-active::before {
 
 .site .site-header {
   display: flex;
+  gap: 4rem 2rem;
   align-items: center;
   justify-content: space-between;
+  padding: var(--padding-container-header);
+}
+@media screen and (max-width: 800px) {
+  .site .site-header {
+    flex-direction: column;
+  }
 }
 .site .site-header menu {
   display: flex;
   gap: 1.2rem;
   align-items: center;
   list-style: none;
+}
+@media screen and (max-width: 800px) {
+  .site .site-header menu {
+    flex-direction: column;
+  }
 }
 .site .site-header menu a {
   text-decoration: none;
@@ -302,6 +317,17 @@ body.has-modal-active::before {
 .admin .site-header a {
   text-decoration: none;
   color: currentColor;
+}
+
+.logo {
+  width: clamp(6rem, 10.6vw, 12rem);
+  height: clamp(6rem, 10.6vw, 12rem);
+}
+.logo img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 .admin {
@@ -497,6 +523,14 @@ body.has-modal-active::before {
   display: block;
 }
 
+.filters {
+  margin: 8rem 0 4rem;
+}
+
+.home main {
+  padding: var(--padding-container-body);
+}
+
 /* LOGIN */
 .login {
   width: 100vw;
@@ -540,7 +574,17 @@ body.has-modal-active::before {
 .posts-list {
   display: grid;
   gap: 2.4rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
+}
+@media screen and (min-width: 500px) {
+  .posts-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 1000px) {
+  .posts-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 .posts-list img {
   width: 100%;

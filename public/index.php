@@ -89,7 +89,7 @@ $posts = $statement->fetchAll();
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
-		<form action="" method="GET">
+		<form class="filters" action="" method="GET">
 			<div class="form-row form-row--select">
 				<label class="sr-only" for="cat-filter">Filtrer les catégories</label>
 				<select id="cat-filter" name="categorie">
@@ -134,9 +134,9 @@ $posts = $statement->fetchAll();
 		<?php
 		// Check si il y a besoin d'une pagination
 		if ( $total_posts['n'] > $num_posts ) : ?>
-			<ol>
+			<ol class="pagination">
 				<?php for ($i = 1; $i < $pagination; $i++) : ?>
-					<li>
+					<li class="<?php echo ($_GET['p'] == $i) ? 'active' : ''; ?>">
 						<a href="/?p=<?php echo $i; ?>"><?php echo $i; ?></a>
 					</li>
 				<?php endfor; ?>

@@ -6,4 +6,7 @@
 
 	--font-primary: "Inter", sans-serif;
 	--font-secondary: "Roboto Serif", serif;
+
+	--padding-container-header: 4rem clamp(2rem, 8vw, 8rem) 0 5vw;
+	--padding-container-body: 4rem clamp(2rem, 8vw, 8rem) 0;
 }
