@@ -50,13 +50,16 @@ $post = $statement->fetch();
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
-		<section>
+		<picture class="hero">
 			<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
-			<h1><?php echo $post['title']; ?></h1>
+		</picture>
+
+		<section class="content">
+			<h1 class="title"><?php echo $post['title']; ?></h1>
 			<?php echo $post['content']; ?>
 		</section>
 
-		<aside>
+		<aside class="sidebar">
 			<div>
 				<ul>
 					<li>
@@ -74,16 +77,18 @@ $post = $statement->fetch();
 				<a href="">Catégorie 2</a>
 				<a href="">Catégorie 3</a>
 			</div>
+		</aside>
 
-			<div>
-				<h2>Articles liés</h2>
+		<aside class="related">
+			<h2 class="title">Articles liés</h2>
 
-				<article>
+			<div class="posts-container">
+				<article class="post-card">
 					<h3>Titre de l'article</h3>
 					<p>Contenu de l'article</p>
 				</article>
 
-				<article>
+				<article class="post-card">
 					<h3>Titre de l'article</h3>
 					<p>Contenu de l'article</p>
 				</article>

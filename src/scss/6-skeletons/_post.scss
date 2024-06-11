@@ -75,3 +75,53 @@
 		}
 	}
 }
+
+.single {
+	main {
+		display: grid;
+		grid-template-columns: 1fr 12rem 30rem;
+		grid-template-areas:
+			"hero hero hero"
+			"content . sidebar"
+			"related related related"
+		;
+	}
+
+	.hero {
+		grid-area: hero;
+
+		img {
+			width: 100%;
+			max-height: 40rem;
+		}
+	}
+
+	.content {
+		grid-area: content;
+		padding: 8rem;
+		padding-right: 0;
+	}
+
+	.sidebar {
+		grid-area: sidebar;
+		padding: 8rem;
+		padding-left: 0;
+	}
+
+	.related {
+		grid-area: related;
+		padding: 0 8rem;
+	}
+
+	.title {
+		margin-bottom: .5em;
+		font-family: var(--font-secondary);
+		font-size: 3.2rem;
+		line-height: 3.2rem;
+	}
+
+	.posts-container {
+		display: flex;
+		gap: 2rem;
+	}
+}

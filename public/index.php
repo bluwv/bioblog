@@ -136,8 +136,8 @@ $posts = $statement->fetchAll();
 		if ( $total_posts['n'] > $num_posts ) : ?>
 			<ol class="pagination">
 				<?php for ($i = 1; $i < $pagination; $i++) : ?>
-					<li class="<?php echo ($_GET['p'] == $i) ? 'active' : ''; ?>">
-						<a href="/?p=<?php echo $i; ?>"><?php echo $i; ?></a>
+					<li class="<?php echo (isset($_GET['p']) && $_GET['p'] == $i) ? 'active' : ''; ?>">
+						<a href="index.php?p=<?php echo $i; ?>"><?php echo $i; ?></a>
 					</li>
 				<?php endfor; ?>
 			</ol>
