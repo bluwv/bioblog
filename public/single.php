@@ -2,9 +2,29 @@
 
 require_once '../config/database.php';
 
-// TODO: Check que le id est existant dans la base de donnée
+/**
+ * On check que l'url possède bien un ?id= en argument GET
+ * et si l'ID est bien existant dans la base de donnée
+ * alors on affiche le template autrement on redirige vers la homepage
+ */
 
-$post_id = $_GET['id'];
+$post_id = $_GET['id'] ?? null;
+
+$query = "SELECT id
+FROM posts p
+WHERE p.id = :post_id";
+$statement = $pdo->prepare( $query );
+$statement->bindValue( ':post_id', $post_id );
+$statement->execute();
+$post_exist = $statement->fetch();
+
+if (!$post_exist) {
+	header('Location: index.php');
+}
+
+/**
+ * Si ID alors commencer à récupérer le contenu et remplir le template
+ */
 
 $query = "SELECT title, content, thumbnail, created_at, username
 FROM posts p
@@ -23,14 +43,15 @@ $post = $statement->fetch();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
+	<link rel="stylesheet" href="assets/css/app.css">
 </head>
-<body>
 
+<body class="site single">
 	<?php include_once 'includes/header.php'; ?>
 
 	<main>
 		<section>
-			<!-- <img src="assets/images/<?php echo $post["thumbnail"]; ?>" alt=""> -->
+			<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
 			<h1><?php echo $post['title']; ?></h1>
 			<?php echo $post['content']; ?>
 		</section>
@@ -71,6 +92,8 @@ $post = $statement->fetch();
 	</main>
 
 	<?php include_once 'includes/footer.php'; ?>
+
+	<script src="assets/app.js"></script>
 
 </body>
 </html>
