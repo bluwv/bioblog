@@ -2,6 +2,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
 
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+// @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
+
 @import '1-settings/theme';
 
 @import '3-generic/reset';
@@ -11,6 +14,7 @@
 
 @import '5-components/modal';
 @import '5-components/pagination';
+@import '5-components/slider';
 
 @import '6-skeletons/header';
 @import '6-skeletons/admin';

@@ -9,9 +9,10 @@
 	background-color: rgba(33, 30, 30, .1);
 
 	@media screen and (min-width:801px) {
-		grid-template-columns: 30rem 1fr;
+		grid-template-columns: 24rem 1fr;
 	}
 
+	// &.post.--list,
 	&.categorie {
 		main > section {
 			display: grid;
@@ -54,6 +55,9 @@
 }
 
 .admin-header {
+	display: flex;
+	gap: 2rem;
+	align-items: center;
 	padding: 2rem 6rem;
 	font-size: 2rem;
 	line-height: 3.2rem;

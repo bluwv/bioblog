@@ -1,5 +1,5 @@
 <header class="site-header">
-	<a href="../index.php">
+	<a class="logo" href="../index.php">
 		<img src="../assets/images/logo-bioblog.png" alt="">
 	</a>
 
@@ -11,9 +11,9 @@
 			<a href="categories.php">Catégories</a>
 		</li>
 		<li>
-			<a href="#">Utilisateurs</a>
+			<a href="users.php">Utilisateurs</a>
 		</li>
-		<li>
+		<li class="link-logout">
 			<a href="logout.php">Se déconnecter</a>
 		</li>
 	</menu>

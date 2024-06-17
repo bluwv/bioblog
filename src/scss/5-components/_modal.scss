@@ -8,6 +8,7 @@ body {
 
 	&.has-modal-active {
 		&::before {
+			z-index: 99;
 			content: "";
 			display: block;
 			position: fixed;
@@ -22,6 +23,7 @@ body {
 }
 
 .modal {
+	z-index: 100;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -33,5 +35,17 @@ body {
 
 	&:not(.active) {
 		display: none;
+	}
+
+	h2 {
+		font-family: var(--font-primary);
+		font-size: 2rem;
+		margin-bottom: 1em;
+	}
+
+	form {
+		label {
+			margin-bottom: 1rem;
+		}
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-require 'data/posts-list.php';
+require 'data/users.php';
 ob_start(); ?>
 
 <section class="admin-header">

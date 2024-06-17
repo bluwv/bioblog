@@ -13,13 +13,16 @@
 		menu {
 			display: flex;
 			gap: 1.2rem;
-			margin-right: 0;
-			margin-left: auto;
 			align-items: center;
 			list-style: none;
 
 			@media screen and (max-width:800px) {
 				flex-direction: column;
+			}
+
+			@media screen and (min-width:801px) {
+				margin-right: 0;
+				margin-left: auto;
 			}
 
 			a {
@@ -39,16 +42,27 @@
 	}
 
 	.admin & {
-		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		position: sticky;
+		top: 0;
+		padding: 2rem 4rem;
+		height: 100vh;
 
 		@media screen and (min-width:801px) {
 			min-height: 100vh;
 			color: white;
-			background-color: #211E1E;
+			background-color: var(--color-black);
 		}
 
 		menu {
+			margin-top: auto;
+			margin-bottom: auto;
 			list-style-type: none;
+
+			& > * {
+				margin: 1.6rem auto;
+			}
 		}
 
 		a {
@@ -59,19 +73,28 @@
 }
 
 .logo {
-	width: clamp(6rem, 10.6vw, 12rem);
-	// width: 100%;
-	// min-width: 6rem;
-	// max-width: 12rem;
-	height: clamp(6rem, 10.6vw, 12rem);
-	// height: 100%;
-	// min-height: 6rem;
-	// max-height: 12rem;
+	display: block;
 
 	img {
 		object-fit: contain;
 		width: 100%;
 		height: 100%;
+	}
+
+	.admin & {
+		width: 8rem;
+		height: 8rem;
+	}
+
+	.site & {
+		width: clamp(6rem, 10.6vw, 12rem);
+		// width: 100%;
+		// min-width: 6rem;
+		// max-width: 12rem;
+		height: clamp(6rem, 10.6vw, 12rem);
+		// height: 100%;
+		// min-height: 6rem;
+		// max-height: 12rem;
 	}
 
 	.single & {

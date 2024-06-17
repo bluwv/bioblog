@@ -1,104 +1,61 @@
 <?php
-
-require_once '../config/database.php';
-
-/**
- * On check que l'url possède bien un ?id= en argument GET
- * et si l'ID est bien existant dans la base de donnée
- * alors on affiche le template autrement on redirige vers la homepage
- */
-
-$post_id = $_GET['id'] ?? null;
-
-$query = "SELECT id
-FROM posts p
-WHERE p.id = :post_id";
-$statement = $pdo->prepare( $query );
-$statement->bindValue( ':post_id', $post_id );
-$statement->execute();
-$post_exist = $statement->fetch();
-
-if (!$post_exist) {
-	header('Location: index.php');
-}
-
-/**
- * Si ID alors commencer à récupérer le contenu et remplir le template
- */
-
-$query = "SELECT title, content, thumbnail, created_at, username
-FROM posts p
-LEFT JOIN users u ON p.user_id = u.id
-WHERE p.id = :post_id";
-$statement = $pdo->prepare( $query );
-$statement->bindValue( ':post_id', $post_id );
-$statement->execute();
-$post = $statement->fetch();
-
+require 'data/single.php';
+ob_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Bioblog</title>
-	<link rel="stylesheet" href="assets/css/app.css">
-</head>
+<picture class="hero">
+	<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
+</picture>
 
-<body class="site single">
-	<?php include_once 'includes/header.php'; ?>
+<section class="content">
+	<h1 class="title"><?php echo $post['title']; ?></h1>
+	<?php echo $post['content']; ?>
+</section>
 
-	<main>
-		<picture class="hero">
-			<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
-		</picture>
+<aside class="sidebar">
+	<div class="post-data">
+		<ul>
+			<li>
+				<?php $created_at = date("d/m/Y", strtotime($post['created_at'])); ?>
+				<p>Publié le: <span><?php echo $created_at; ?></span></p>
+			</li>
+			<li>
+				<p>Auteur : <span><?php echo $post['username']; ?></span></p>
+			</li>
+		</ul>
+	</div>
 
-		<section class="content">
-			<h1 class="title"><?php echo $post['title']; ?></h1>
-			<?php echo $post['content']; ?>
-		</section>
+	<div class="categories-list">
+		<a href="">Catégorie 1</a>
+		<a href="">Catégorie 2</a>
+		<a href="">Catégorie 3</a>
+	</div>
+</aside>
 
-		<aside class="sidebar">
-			<div>
-				<ul>
-					<li>
-						<?php $created_at = date("d/m/Y", strtotime($post['created_at'])); ?>
-						<p>Publié le: <span><?php echo $created_at; ?></span></p>
-					</li>
-					<li>
-						<p>Auteur : <span><?php echo $post['username']; ?></span></p>
-					</li>
+<aside class="related">
+	<h2 class="title">Articles liés</h2>
+
+	<div class="posts-container">
+		<div class="glide">
+			<div class="glide__track" data-glide-el="track">
+				<ul class="glide__slides">
+					<?php foreach ($post_linked as $post) : ?>
+						<li class="glide__slide">
+							<?php include 'views/components/post-card.php'; ?>
+						</li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 
-			<div>
-				<a href="">Catégorie 1</a>
-				<a href="">Catégorie 2</a>
-				<a href="">Catégorie 3</a>
+			<div class="glide__arrows" data-glide-el="controls">
+				<button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+				<button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
 			</div>
-		</aside>
+		</div>
+	</div>
+</aside>
 
-		<aside class="related">
-			<h2 class="title">Articles liés</h2>
-
-			<div class="posts-container">
-				<article class="post-card">
-					<h3>Titre de l'article</h3>
-					<p>Contenu de l'article</p>
-				</article>
-
-				<article class="post-card">
-					<h3>Titre de l'article</h3>
-					<p>Contenu de l'article</p>
-				</article>
-			</div>
-		</aside>
-	</main>
-
-	<?php // include_once 'includes/footer.php'; ?>
-
-	<script src="assets/app.js"></script>
-
-</body>
-</html>
+<?php
+$content = ob_get_clean();
+require 'views/layout/default.php';
+?>

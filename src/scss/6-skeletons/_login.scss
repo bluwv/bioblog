@@ -30,6 +30,21 @@
 		padding: 2rem 3.2rem 4rem;
 		background: white;
 		border-radius: .8rem;
+
+		// Example CSS @container
+		// container-type: inline-size;
+
+		// @container (min-width: 360px) {
+		// 	label {
+		// 		color: red;
+		// 	}
+		// }
+		//
+
+		label {
+			margin-top: 2rem;
+			margin-bottom: 1rem;
+		}
 	}
 
 	.button {

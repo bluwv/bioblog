@@ -6,6 +6,10 @@
 	margin-top: 4rem;
 }
 
+.button-wrapper {
+	margin-top: 2.4rem;
+}
+
 .button {
 	display: inline-block;
 	text-decoration: none;
@@ -14,18 +18,28 @@
 .button-primary {
 	padding: 2rem 6.4rem;
 	font-size: 1.4rem;
-	line-height: 1.4rem;
+	line-height: 1;
 	font-weight: 600;
 	letter-spacing: .2rem;
 	text-transform: uppercase;
 	color: white;
-	background-color: #211E1E;
+	background-color: var(--color-black);
 	border: none;
 	border-radius: 5.2rem;
 }
 
 .button-small {
 	padding: 1.2rem 2rem 1rem;
+	font-size: 1rem;
+}
+
+.button-cancel {
+	color: var(--color-black);
+	background-color: var(--color-blue-light);
+}
+
+.button-delete {
+	background-color: var(--color-red);
 }
 
 .link {
@@ -39,6 +53,7 @@
 	border: none;
 }
 
-.link-delete {
+.link-delete,
+.link-logout {
 	color: var(--color-red);
 }
