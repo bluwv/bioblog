@@ -3,7 +3,7 @@
 require_once 'includes/has_session.php';
 require_once '../../config/database.php';
 
-$page = "post --list";
+$page = "posts-list";
 
 $query = "SELECT p.id, p.title, p.status, p.created_at, u.username
 FROM posts p

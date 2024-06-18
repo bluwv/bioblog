@@ -26,33 +26,25 @@ if ( $_POST ) {
 
 	if (isset($_POST['password']) && ! empty($_POST['password'])) {
 		$password = sanitize_input($_POST['password']);
-		// FIXME: Check password hash var_dump(password_verify($password, $_POST['password']));
 	}
 
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		$query = "SELECT *
 		FROM users
-		WHERE username = :username"; // AND password = :password";
+		WHERE username = :username";
 
 		$statement = $pdo->prepare( $query );
 		$statement->bindValue(':username', $username);
-		// $statement->bindValue(':password', $password);
 		$statement->execute();
 		$users = $statement->fetch();
 
-		if ( $users ) {
-			// if (password_verify($password, $users['password'])) {
-			// 	echo "Login successful!";
+		if ( password_verify( $password, $users['password'] ) ) {
+			$_SESSION["current_user"]['id'] = $users['id'];
+			$_SESSION["current_user"]['name'] = $users['username'];
+			$_SESSION["current_user"]['role'] = 'administrator';
+			$_SESSION['last_activity'] = time();
 
-				$_SESSION["current_user"]['id'] = $users['id'];
-				$_SESSION["current_user"]['name'] = $users['username'];
-				$_SESSION["current_user"]['role'] = 'administrator';
-				$_SESSION['last_activity'] = time();
-
-				header('Location: posts-list.php');
-			// } else {
-			// 	var_dump("Cette combinaison username et password n'existe pas.");
-			// }
+			header('Location: posts-list.php');
 		} else {
 			var_dump("Cette combinaison username et password n'existe pas.");
 		}

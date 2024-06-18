@@ -13,7 +13,6 @@ ob_start(); ?>
 			<?php endforeach; ?>
 		</select>
 	</div>
-
 	<!-- <button type="submit">Filtrer</button> -->
 </form>
 

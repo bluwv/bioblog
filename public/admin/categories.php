@@ -17,9 +17,9 @@ ob_start(); ?>
 							<form action="data/category_update.php" method="POST">
 								<input type="hidden" name="category_id" value="<?php echo $categorie['id']; ?>">
 								<input type="text" name="category_name" value="<?php echo $categorie['name']; ?>">
-								<div>
-									<button type="submit" data-click="update">Modifier</button>
-									<button type="button" data-click="delete">Supprimer</button>
+								<div class="button-wrapper">
+									<button class="button-primary button-small button-cancel button" type="submit" data-click="update">Modifier</button>
+									<button class="button-primary button-small button-delete button" type="button" data-click="delete">Supprimer</button>
 								</div>
 							</form>
 						</td>

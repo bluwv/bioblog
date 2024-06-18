@@ -15,7 +15,7 @@ ob_start(); ?>
 		<input id="password" type="password" name="password" placeholder="Mot de passe" value="<?php echo (isset($_POST['password'])) ? $_POST['password'] : ''; ?>">
 
 		<button class="button-primary button-small button" type="submit">Se connecter</button>
-		<a class="link- link" href="#">S’inscrire</a>
+		<a class="link- link" href="register.php">S’inscrire</a>
 	</form>
 
 	<a class="link- link --reset-password" href="#">Mot de passe oublié ?</a>

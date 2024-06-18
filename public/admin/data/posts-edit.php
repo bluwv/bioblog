@@ -3,7 +3,7 @@
 require_once 'includes/has_session.php';
 require_once '../../config/database.php';
 
-$page = "post --edit";
+$page = "posts-edit";
 
 $post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
 
@@ -51,13 +51,15 @@ if ( $_POST ) {
 		$statement->bindValue( ':status', $post_status );
 		$statement->execute();
 
-		$query = "UPDATE categories_posts
-		SET categorie_id = :categorie_id
-		WHERE post_id = " . $post_id;
+		if ( isset( $post['categorie'] ) ) {
+			$query = "UPDATE categories_posts
+			SET categorie_id = :categorie_id
+			WHERE post_id = " . $post_id;
 
-		$statement = $pdo->prepare( $query );
-		$statement->bindValue( ':categorie_id', $post['categorie'] );
-		$statement->execute();
+			$statement = $pdo->prepare( $query );
+			$statement->bindValue( ':categorie_id', $post['categorie'] );
+			$statement->execute();
+		}
 	}
 
 	// DELETE

@@ -1,7 +1,7 @@
 .admin {
 	display: grid;
 	gap: 0;
-	grid-template-columns: 1fr;
+	grid-template-columns: 8rem 1fr;
 	/* grid-template-areas:
 		"navigation"
 		"content"
@@ -12,7 +12,7 @@
 		grid-template-columns: 24rem 1fr;
 	}
 
-	// &.post.--list,
+	// &.posts-list,
 	&.categorie {
 		main > section {
 			display: grid;
@@ -93,70 +93,66 @@
 	}
 
 	tr {
+		display: grid;
+		grid-template-columns: 1fr repeat(3, 10rem); /* repeat(3, 10rem) = premier chiffre nombre de fois à répéter le second. => 10rem 10rem 10rem */
+		gap: 6rem;
+		align-items: center;
+		padding: 2.4rem 2.4rem 2rem;
 		width: 100%;
+		background-color: white;
+
+		&:not(:hover) {
+			.link {
+				opacity: 0;
+				pointer-events: none;
+				transition-delay: 0s;
+			}
+		}
+
+		&:not(:first-child) {
+			border-top: 1px solid var(--color-blue-light);
+		}
+
+		.users & {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.categorie & {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	a {
+		color: currentColor;
+		text-decoration: none;
+	}
+
+	.link {
+		font-size: 1rem;
+		transition: all .2s ease-in-out;
+
+		&:nth-child(1) {
+			transition-delay: .1s;
+		}
+
+		&:nth-child(2) {
+			transition-delay: .2s;
+		}
+
+		&:nth-child(3) {
+			transition-delay: .3s;
+		}
+
+		&.--delete {
+			color: var(--color-red);
+		}
 	}
 }
 
-.admin-content table a {
-	color: currentColor;
-	text-decoration: none;
-}
-
-.admin-content table .link {
-	font-size: 1rem;
-	transition: all .2s ease-in-out;
-}
-
-.admin-content table .link:nth-child(1) {
-	transition-delay: .1s;
-}
-
-.admin-content table .link:nth-child(2) {
-	transition-delay: .2s;
-}
-
-.admin-content table .link:nth-child(3) {
-	transition-delay: .3s;
-}
-
-.admin-content table .link.--delete {
-	color: var(--color-red);
-}
-
-.admin-content tr {
-	display: grid;
-	grid-template-columns: 1fr repeat(3, 10rem); /* repeat(3, 10rem) = premier chiffre nombre de fois à répéter le second. => 10rem 10rem 10rem */
-	gap: 6rem;
-	align-items: center;
-	padding: 2.4rem 2.4rem 2rem;
-	background-color: white;
-}
-
-.admin-content {
-	tr:not(:hover) .link {
-		opacity: 0;
-		pointer-events: none;
-		transition-delay: 0s;
-	}
-
-	tr:not(:first-child) {
-		border-top: 1px solid var(--color-blue-light);
-	}
-}
-
-.admin.post {
+.admin.posts-list {
 	.admin-content tr:nth-child(2n) {
 		background-color: rgba(255, 255, 255, .6);
 	}
-}
-
-.admin-content form {
-	// display: flex;
-	// gap: 2rem;
-
-	// @media screen and (max-width:1400px) {
-	// 		flex-direction: column;
-	// }
 }
 
 .admin-content form > div {

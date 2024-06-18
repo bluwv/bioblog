@@ -8,7 +8,9 @@
 </head>
 
 <body class="admin <?php echo $page; ?>">
-	<?php if ( $page != 'login') :
+	<?php
+	$page_not_logged_in = ['login', 'register'];
+	if ( ! in_array($page, $page_not_logged_in) ) :
 		include 'includes/header.php';
 	endif; ?>
 
@@ -32,7 +34,7 @@
 
 	<script src="../assets/app.js"></script>
 
-	<?php if ( $page == 'posts-edit.php' ) : ?>
+	<?php if ( $page == 'posts-edit' ) : ?>
 	<script src="https://cdn.tiny.cloud/1/xswlm84astace0qr6v2hdut445do9w67ky2rx4pai8d1xhbu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {

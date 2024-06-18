@@ -42,26 +42,46 @@
 	}
 
 	.admin & {
-		display: flex;
-		flex-direction: column;
 		position: sticky;
 		top: 0;
-		padding: 2rem 4rem;
+		min-height: 100vh;
 		height: 100vh;
+		color: white;
+		background-color: var(--color-black);
 
-		@media screen and (min-width:801px) {
-			min-height: 100vh;
-			color: white;
-			background-color: var(--color-black);
+		.wrapper {
+			display: flex;
+			flex-direction: column;
+			padding: 2rem 2rem 4rem;
+			height: 100%;
+
+			@media screen and (min-width:801px) {
+				padding: 2rem 4rem 6rem;
+			}
 		}
 
 		menu {
 			margin-top: auto;
 			margin-bottom: auto;
 			list-style-type: none;
+			transition: opacity .2s .2s ease-in-out;
+
+			@media screen and (max-width:801px) {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				padding: 2rem 2rem 6rem;
+				width: 20rem;
+				height: 100vh;
+				background-color: var(--color-black);
+				transition: transform .1s ease-out;
+			}
 
 			& > * {
-				margin: 1.6rem auto;
+				margin: 1.6rem 0;
 			}
 		}
 
@@ -69,11 +89,24 @@
 			text-decoration: none;
 			color: currentColor;
 		}
+
+		@media screen and (max-width:801px) {
+			&:not(:hover) {
+				menu {
+					transform: translateX(-12rem);
+					opacity: 0;
+					pointer-events: none;
+					transition: opacity 0s 0s ease-in-out;
+				}
+			}
+		}
 	}
 }
 
 .logo {
+	z-index: 100;
 	display: block;
+	position: relative;
 
 	img {
 		object-fit: contain;

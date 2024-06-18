@@ -6,6 +6,8 @@ if ( $_POST ) {
 
 	$post = $_POST;
 
+
+
 	$query = "UPDATE categories c
 	SET c.name = :name
 	WHERE c.id = " . $post['category_id'];
