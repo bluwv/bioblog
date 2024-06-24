@@ -1,6 +1,13 @@
 <?php
-require 'data/users.php';
-ob_start(); ?>
+require_once 'includes/has_session.php';
+require_once 'App/User.php';
+
+$page = "users";
+
+$users = new User;
+
+ob_start();
+?>
 
 <section class="admin-header">
 	<h1>Utilisateurs</h1>
@@ -8,7 +15,7 @@ ob_start(); ?>
 
 <section class="admin-content">
 	<table>
-		<?php foreach ( $users as $user ) : ?>
+		<?php foreach ( $users->getUsers() as $user ) : ?>
 			<tr class="user-id-<?php echo $user['id']; ?>">
 				<td><?php echo $user['username']; ?></td>
 				<td><?php echo $user['mail']; ?></td>

@@ -15,7 +15,7 @@ $pdo = null;
 
 <header class="site-header">
 	<a class="logo" href="index.php">
-		<img src="assets/images/logo-bioblog.png" alt="">
+		<img src="<?php echo ROOT; ?>/assets/images/logo-bioblog.png" alt="">
 	</a>
 
 	<menu>

@@ -1,10 +1,12 @@
 <?php
-require 'data/single.php';
+include 'data/single.php';
 ob_start();
 ?>
 
 <picture class="hero">
-	<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
+	<?php if (isset($post["thumbnail"]) && ! empty($post["thumbnail"]) ) : ?>
+		<img src="<?php echo ROOT; ?>/uploads/<?php echo $post["thumbnail"]; ?>" alt="">
+	<?php endif; ?>
 </picture>
 
 <section class="content">

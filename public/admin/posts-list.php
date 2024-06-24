@@ -1,5 +1,10 @@
 <?php
-require 'data/posts-list.php';
+require_once 'includes/has_session.php';
+require_once 'App/Post.php';
+
+$page = "posts-list";
+
+$posts = new Post;
 ob_start(); ?>
 
 <section class="admin-header">
@@ -9,7 +14,7 @@ ob_start(); ?>
 
 <section class="admin-content">
 	<table>
-		<?php foreach ( $posts as $post ) :
+		<?php foreach ( $posts->getPosts() as $post ) :
 			$status = ($post['status']) ? "Publié" : "Brouillon";
 			$created_at = date("d/m/Y", strtotime($post['created_at']));
 			?>

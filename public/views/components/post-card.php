@@ -1,7 +1,9 @@
 <article id="post-<?php echo $post["id"]; ?>" class="post-card">
 	<picture class="post-card-image">
-		<a href="single.php?id=<?php echo $post["id"]; ?>">
-			<img src="uploads/<?php echo $post["thumbnail"]; ?>" alt="">
+		<a href="single/<?php echo $post["id"]; ?>">
+			<?php if (isset($post["thumbnail"]) && ! empty($post["thumbnail"]) ) : ?>
+				<img src="<?php echo ROOT; ?>/uploads/<?php echo $post["thumbnail"]; ?>" alt="">
+			<?php endif; ?>
 		</a>
 	</picture>
 

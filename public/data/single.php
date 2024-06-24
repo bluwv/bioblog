@@ -11,7 +11,7 @@ $page = 'single';
  * alors on affiche le template autrement on redirige vers la homepage
  */
 
-$post_id = $_GET['id'] ?? null;
+$post_id = $vars['id'] ?? null; // $_GET['id']
 
 $query = "SELECT id
 FROM posts p
@@ -45,7 +45,7 @@ $post_linked = $statement->fetchAll();
 // var_dump(empty($posts_linked));
 
 if (!$post_exist) {
-	header('Location: index.php');
+	// header('Location: index.php');
 }
 
 /**

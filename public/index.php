@@ -1,41 +1,56 @@
 <?php
-require 'data/home.php';
-ob_start(); ?>
 
-<form class="filters" action="" method="GET">
-	<div class="form-row form-row--select">
-		<label class="sr-only" for="cat-filter">Filtrer les catégories</label>
-		<select id="cat-filter" name="categorie">
-			<?php foreach ($categories as $categorie) :
-				$selected = ( isset( $_GET['categorie'] ) && $_GET['categorie'] == $categorie['id'] ) ? 'selected' : '';
-				?>
-				<option value="<?php echo $categorie['id']; ?>" <?php echo $selected; ?>><?php echo $categorie['name']; ?></option>
-			<?php endforeach; ?>
-		</select>
-	</div>
-	<!-- <button type="submit">Filtrer</button> -->
-</form>
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
-<section class="posts-list">
-	<?php foreach ( $posts as $post ) : ?>
-		<?php if ( $post["status"] == 1 ) : // Si == 1 alors le post est publié ?>
-			<?php include 'views/components/post-card.php'; ?>
-		<?php endif; ?>
-	<?php endforeach; ?>
-</section>
+require '../vendor/autoload.php';
 
-<ol class="pagination">
-	<?php
-	// Check si il y a besoin d'une pagination
-	if ( $total_posts['n'] > $num_posts ) : ?>
-		<?php for ($i = 1; $i < $pagination; $i++) : ?>
-			<li class="<?php echo (isset($_GET['p']) && $_GET['p'] == $i) ? 'active' : ''; ?>">
-				<a href="index.php?p=<?php echo $i; ?>"><?php echo $i; ?></a>
-			</li>
-		<?php endfor; ?>
-	<?php endif; ?>
-</ol>
+use FastRoute\RouteCollector;
 
-<?php $content = ob_get_clean();
-require 'views/layout/default.php';
-?>
+const ROOT = "http://bioblog.localhost";
+
+$routes = function (RouteCollector $r) {
+	$r->addRoute('GET', '/', 'home');
+
+	$r->addRoute('GET', '/single/{id:\d+}', 'single');
+
+	// $r->addRoute('GET', '/admin', 'login');
+	// $r->addRoute('GET', '/register', 'register');
+	// $r->addRoute('GET', '/users', 'users');
+	// $r->addRoute('GET', '/posts-list', 'postsList');
+	// $r->addRoute('GET', '/categories', 'categories');
+
+	// $r->addRoute('GET', '/posts-edit/{id:\d+}', 'postsEdit');
+};
+
+// Fetch method and URI from somewhere
+$httpMethod = $_SERVER['REQUEST_METHOD'];
+$uri = $_SERVER['REQUEST_URI'];
+
+// Strip query string (?foo=bar) and decode URI
+if (false !== $pos = strpos($uri, '?')) {
+	$uri = substr($uri, 0, $pos);
+}
+$uri = rawurldecode($uri);
+
+$routeInfo = \FastRoute\simpleDispatcher($routes)->dispatch($httpMethod, $uri);
+
+switch ($routeInfo[0]) {
+	case FastRoute\Dispatcher::NOT_FOUND:
+		http_response_code(404);
+		// include 'home.php';
+		break;
+	case FastRoute\Dispatcher::FOUND:
+		$handler = $routeInfo[1];
+		$vars = $routeInfo[2];
+		call_user_func($handler, $vars);
+		break;
+}
+
+function home() {
+	require_once 'home.php';
+}
+
+function single($vars) {
+	include 'single.php';
+}

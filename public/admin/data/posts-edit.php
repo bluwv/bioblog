@@ -1,11 +1,11 @@
 <?php
 
-require_once 'includes/has_session.php';
-require_once '../../config/database.php';
+// require_once 'includes/has_session.php';
+// require_once '../../config/database.php';
 
-$page = "posts-edit";
+// $page = "posts-edit";
 
-$post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
+// $post_id = $_GET['id'] ?? ''; // equivalent de : $_GET['id'] ? $_GET['id'] : '';
 
 if ( $_POST ) {
 	$post = $_POST;
@@ -74,22 +74,22 @@ if ( $_POST ) {
 	}
 }
 
-if ( isset( $post_id ) && ! empty ( $post_id ) ) {
-	$query = "SELECT p.id as post_id, p.title, p.content, p.status, p.thumbnail, p.user_id, p.created_at, p.updated_at, c.id as categorie_id, c.name
-	FROM posts p
-	LEFT JOIN categories_posts cp ON cp.post_id = p.id
-	LEFT JOIN categories c ON c.id = cp.categorie_id
-	WHERE p.id = " . $post_id;
+// if ( isset( $post_id ) && ! empty ( $post_id ) ) {
+// 	$query = "SELECT p.id as post_id, p.title, p.content, p.status, p.thumbnail, p.user_id, p.created_at, p.updated_at, c.id as categorie_id, c.name
+// 	FROM posts p
+// 	LEFT JOIN categories_posts cp ON cp.post_id = p.id
+// 	LEFT JOIN categories c ON c.id = cp.categorie_id
+// 	WHERE p.id = " . $post_id;
 
-	$statement = $pdo->prepare( $query );
-	$statement->execute();
-	$post = $statement->fetch();
-}
+// 	$statement = $pdo->prepare( $query );
+// 	$statement->execute();
+// 	$post = $statement->fetch();
+// }
 
-$query = "SELECT c.id, c.name
-FROM categories c
-LEFT JOIN categories_posts cp ON cp.post_id = c.id";
+// $query = "SELECT c.id, c.name
+// FROM categories c
+// LEFT JOIN categories_posts cp ON cp.post_id = c.id";
 
-$statement = $pdo->prepare( $query );
-$statement->execute();
-$categories = $statement->fetchAll();
+// $statement = $pdo->prepare( $query );
+// $statement->execute();
+// $categories = $statement->fetchAll();

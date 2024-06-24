@@ -1,9 +1,16 @@
 <?php
-require 'data/login.php';
+
+session_start();
+
+$page = "login";
+
+if ( isset($_SESSION["current_user"]) ) {
+	header('Location: posts-list.php');
+}
 ob_start(); ?>
 
 <div class="login-wrapper">
-	<form action="" method="POST">
+	<form action="data/login.php" method="POST">
 		<a class="logo" href="../index.php">
 			<img src="../assets/images/logo-bioblog.png" width="112" height="112" alt="">
 		</a>

@@ -1,6 +1,13 @@
 <?php
-require 'data/categories.php';
-ob_start(); ?>
+require_once 'includes/has_session.php';
+require_once 'App/Categorie.php';
+
+$page = "categorie";
+
+$categorie = new Categorie;
+
+ob_start();
+?>
 
 <section>
 	<header class="admin-header">
@@ -11,7 +18,7 @@ ob_start(); ?>
 	<div class="admin-content">
 		<table class="categories-list">
 			<tbody>
-				<?php foreach ($categories as $categorie) : ?>
+				<?php foreach ( $categorie->getCategories() as $categorie) : ?>
 					<tr class="categorie-item categorie-id-<?php echo $categorie['id']; ?>">
 						<td>
 							<form action="data/category_update.php" method="POST">

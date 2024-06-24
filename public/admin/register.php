@@ -1,9 +1,17 @@
 <?php
-require 'data/register.php';
-ob_start(); ?>
+
+session_start();
+
+$page = "register";
+
+if ( isset($_SESSION["current_user"]) ) {
+	header('Location: http://bioblog.localhost/admin/posts-list.php');
+}
+ob_start();
+?>
 
 <div class="login-wrapper">
-	<form action="" method="POST">
+	<form action="data/register.php" method="POST">
 		<a class="logo" href="../index.php">
 			<img src="../assets/images/logo-bioblog.png" width="112" height="112" alt="">
 		</a>

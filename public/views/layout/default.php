@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bioblog</title>
-	<link rel="stylesheet" href="assets/css/app.css">
+	<link rel="stylesheet" href="<?php echo ROOT; ?>/assets/css/app.css">
 </head>
 
 <body class="site <?php echo $page; ?>">
@@ -20,6 +20,6 @@
 	<?php if ( $page == "single") : ?>
 		<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
 	<?php endif; ?>
-	<script src="assets/app.js"></script>
+	<script src="<?php echo ROOT; ?>/assets/app.js"></script>
 </body>
 </html>
