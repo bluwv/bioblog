@@ -19,6 +19,9 @@ class Admin {
 		return $input;
 	}
 
+	/**
+	 *
+	 */
 	public function registerUser()
 	{
 		if (isset($_POST['username']) && ! empty($_POST['username'])) {
